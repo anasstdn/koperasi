@@ -63,6 +63,7 @@ class LoginController extends Controller
     public function authenticated(Request $request, $user)
     {
         $this->logLoginDetails($user);
+
         // dd($user);
         // if(!$user->verified)
         // {
@@ -73,6 +74,11 @@ class LoginController extends Controller
         // {
         //     Session::put('locale', setting('language_setting'));
         // }
+        $pesan='';
+        $pesan.='Pengguna '.strtoupper(strtolower (Auth::user()->name)).'';
+        $pesan.='<br>Anda melakukan login ke sistem pada '.date('d-m-Y H:i:s');
+
+        message(true,$pesan,'');
         return redirect()->intended($this->redirectPath());
     }
 

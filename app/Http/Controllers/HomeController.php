@@ -24,12 +24,6 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $pesan='';
-        $pesan.='Pengguna '.strtoupper(strtolower (Auth::user()->name)).'';
-        $pesan.='<br>Anda melakukan login ke sistem pada '.date('d-m-Y H:i:s');
-
-        message(true,$pesan,'');
-
         return view('home');
     }
 }

@@ -56,3 +56,12 @@ Route::prefix('provinsi')->group(function() {
     Route::match(['get','post'],'/update','ProvinsiController@update');
     Route::get('/{id}/delete', 'ProvinsiController@destroy');
 });
+
+Route::prefix('kabupaten')->group(function() {
+    Route::get('/', 'KabupatenController@index');
+    Route::match(['get', 'post'],'/get-data','KabupatenController@getData');
+    Route::match(['get','post'],'/store','KabupatenController@store');
+    Route::match(['get', 'post'],'/edit/{id}','KabupatenController@edit');
+    Route::match(['get','post'],'/update','KabupatenController@update');
+    Route::get('/{id}/delete', 'KabupatenController@destroy');
+});

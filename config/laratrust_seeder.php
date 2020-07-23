@@ -15,6 +15,7 @@ return [
             'master-menu'           => 'r',
                 'master-umum-menu'  => 'r',
                     'provinsi'      => 'r',
+                    'kabupaten'     => 'r',
         ],
         'superadministrator' => [
             'users'                 => 'c,r,u,d',
@@ -29,6 +30,7 @@ return [
             'master-menu'           => 'r',
                 'master-umum-menu'  => 'r',
                     'provinsi'      => 'r',
+                    'kabupaten'     => 'r',
         ],
         // 'administrator' => [
         //     'users' => 'c,r,u,d',

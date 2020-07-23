@@ -183,5 +183,22 @@ class MenuSeeder extends Seeder
     );
         $subsubmenu->save();
 
+        $permission = Permission::firstOrNew(array(
+            'name'=>'read-kabupaten',
+        ));
+        $permission->display_name = 'Read Kabupaten Menu';
+        $permission->save();
+
+        $subsubmenu = Menu::firstOrNew(array(
+            'name'=>'Kabupaten',
+            'parent_id'=>$submenu->id,
+            'permission_id'=>$permission->id,
+            'ordinal'=>3,
+            'parent_status'=>'N',
+            'url'=>'kabupaten',
+        )
+    );
+        $subsubmenu->save();
+
     }
 }
