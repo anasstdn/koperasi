@@ -20,9 +20,9 @@
 
         <!-- Icons -->
         <!-- The following icons can be replaced with your own, they are used by desktop and mobile browsers -->
-        <link rel="shortcut icon" href="{{asset('oneui/')}}/src/assets/media/favicons/favicon.png">
-        <link rel="icon" type="image/png" sizes="192x192" href="{{asset('oneui/')}}/src/assets/media/favicons/favicon-192x192.png">
-        <link rel="apple-touch-icon" sizes="180x180" href="{{asset('oneui/')}}/src/assets/media/favicons/apple-touch-icon-180x180.png">
+        <link rel="shortcut icon" href="{{asset('images/')}}/logo/logo160.png">
+        <link rel="icon" type="image/png" sizes="192x192" href="{{asset('images/')}}/logo/logo160.png">
+        <link rel="apple-touch-icon" sizes="180x180" href="{{asset('images/')}}/logo/logo160.png">
         <!-- END Icons -->
 
         <!-- Stylesheets -->
@@ -99,7 +99,7 @@
                                         </div>
                                         <div class="block-content">
                                             <div class="p-sm-3 px-lg-4 py-lg-5">
-                                                <h1 class="mb-2">NubesKop</h1>
+                                                <h1 class="mb-2"><img class="rounded" src="{{asset('images/')}}/logo/logo160.png" alt="Header Avatar" style="width: 70px;">&nbspNubesKop</h1>
                                                 <p>Selamat datang, silahkan masukkan nama pengguna dan pin.</p>
 
                                                 <!-- Sign In Form -->

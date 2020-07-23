@@ -20,9 +20,9 @@
 
         <!-- Icons -->
         <!-- The following icons can be replaced with your own, they are used by desktop and mobile browsers -->
-        <link rel="shortcut icon" href="{{asset('oneui/')}}/src/assets/media/favicons/favicon.png">
-        <link rel="icon" type="image/png" sizes="192x192" href="{{asset('oneui/')}}/src/assets/media/favicons/favicon-192x192.png">
-        <link rel="apple-touch-icon" sizes="180x180" href="{{asset('oneui/')}}/src/assets/media/favicons/apple-touch-icon-180x180.png">
+        <link rel="shortcut icon" href="{{asset('images/')}}/logo/logo160.png">
+        <link rel="icon" type="image/png" sizes="192x192" href="{{asset('images/')}}/logo/logo160.png">
+        <link rel="apple-touch-icon" sizes="180x180" href="{{asset('images/')}}/logo/logo160.png">
         <!-- END Icons -->
 
         <link rel="stylesheet" href="{{asset('oneui/')}}/src/assets/js/plugins/datatables/dataTables.bootstrap4.css">
@@ -140,7 +140,8 @@
                 <div class="content py-3">
                     <div class="row font-size-sm">
                         <div class="col-sm-6 order-sm-2 py-1 text-center text-sm-right">
-                            Crafted with <i class="fa fa-heart text-danger"></i> by <a class="font-w600" href="https://1.envato.market/ydb" target="_blank">pixelcave</a>
+                            {{-- Crafted with <i class="fa fa-heart text-danger"></i> by <a class="font-w600" href="https://1.envato.market/ydb" target="_blank">pixelcave</a> --}}
+                            <a class="font-w600" href="#" target="_blank">KSU Pijar Tirta Manunggal</a>
                         </div>
                         <div class="col-sm-6 order-sm-1 py-1 text-center text-sm-left">
                             <a class="font-w600" href="https://1.envato.market/xWy" target="_blank">Nusantara Bersatu</a> &copy; <span data-toggle="year-copy"></span>
@@ -433,6 +434,73 @@
           });
           } else if (result.dismiss === 'cancel') {
               toast.fire("Password batal direset!");
+              setTimeout(function() {
+                      location.reload();
+                }, 1000);
+          }
+      });
+   }
+
+   function nonaktifkan(url,status_aktif)
+    {
+        var title;
+        var msg;
+        var msg_alert_success;
+        var msg_alert_failed;
+        if(status_aktif==true)
+        {
+            title='Nonaktifkan User';
+            msg='Apakah anda yakin akan menonaktifkan user?';
+            msg_alert_success='User berhasil dinonaktifkan';
+            msg_alert_failed='User batal dinonaktifkan';
+        }
+        else
+        {
+            title='Aktifkan User';
+            msg='Apakah anda yakin akan mengaktifkan user?';
+            msg_alert_success='User berhasil diaktifkan';
+            msg_alert_failed='User batal diaktifkan';
+        }
+
+        let toast = Swal.mixin({
+            buttonsStyling: false,
+            customClass: {
+                confirmButton: 'btn btn-success m-1',
+                cancelButton: 'btn btn-danger m-1',
+                input: 'form-control'
+            }
+        });
+
+       var token = $("meta[name='csrf-token']").attr("content");
+       toast.fire({
+        title: title,
+          text: msg,
+          type: 'warning',
+          showCancelButton: true,
+          customClass: {
+            confirmButton: 'btn btn-danger m-1',
+            cancelButton: 'btn btn-secondary m-1'
+        },
+        confirmButtonText: 'Yes',
+        html: false,
+      })
+       .then(result => {
+          if (result.value) {
+              $.ajax({
+                url : url,
+                type: 'GET',
+                headers: {
+                  'X-CSRF-TOKEN': token
+              },
+              success:function(){
+                toast.fire(msg_alert_success, ' ', 'success');
+                setTimeout(function() {
+                      location.reload();
+                }, 1000);
+              },
+          });
+          } else if (result.dismiss === 'cancel') {
+              toast.fire(msg_alert_failed);
               setTimeout(function() {
                       location.reload();
                 }, 1000);

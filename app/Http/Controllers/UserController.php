@@ -60,7 +60,7 @@ class UserController extends Controller
     	->addColumn('status', function ($data) {
     		if(isset($data->status_aktif))
     		{
-                if($data->status_aktif=='Y')
+                if($data->status_aktif==1)
                 {
                     return array('url'=>url("user/".$data->id)."/nonaktifkan",'status_aktif'=>$data->status_aktif);
                 }
@@ -340,6 +340,44 @@ public function checkEmail(Request $request)
     return Response::json(array('msg' => 'true'));
 }
 return Response::json(array('msg' => 'false'));  
+}
+
+public function nonaktifkan(Request $request,$kode)
+{
+     $user=User::find($kode);
+      $act=false;
+      try {
+         $dat=array(
+            'status_aktif'=>0,
+        );
+         $reset=$user->update($dat);
+         message($reset,'Data berhasil disimpan!','Data gagal disimpan!');
+     } catch (\Exception $e) {
+         $dat=array(
+            'status_aktif'=>0,
+        );
+         $reset=$user->update($dat);
+         message($reset,'Data berhasil disimpan!','Data gagal disimpan!');
+     }
+}
+
+public function aktifkan(Request $request,$kode)
+{
+    $user=User::find($kode);
+      $act=false;
+      try {
+         $dat=array(
+            'status_aktif'=>1,
+        );
+         $reset=$user->update($dat);
+         message($reset,'Data berhasil disimpan!','Data gagal disimpan!');
+     } catch (\Exception $e) {
+         $dat=array(
+            'status_aktif'=>1,
+        );
+         $reset=$user->update($dat);
+         message($reset,'Data berhasil disimpan!','Data gagal disimpan!');
+     }
 }
 
 }

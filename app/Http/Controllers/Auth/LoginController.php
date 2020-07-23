@@ -55,6 +55,11 @@ class LoginController extends Controller
         return $this->username;
     }
 
+    protected function credentials(Request $request)
+    {
+        return array_merge($request->only($this->username(), 'password'), ['status_aktif' => 1]);
+    }
+
     public function authenticated(Request $request, $user)
     {
         $this->logLoginDetails($user);

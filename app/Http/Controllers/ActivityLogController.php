@@ -29,7 +29,7 @@ class ActivityLogController extends Controller
 	public function __construct()
 	{
 		$this->middleware('auth');
-		// $this->middleware('permission:read-activity');
+		$this->middleware('permission:read-activity');
 	}
 
 	protected function view($view, $data = [])
@@ -75,7 +75,7 @@ class ActivityLogController extends Controller
     			return null;
     		}
     	})
-    	->addColumn('description',function($data){
+    	->addColumn('causer_id',function($data){
     		if(isset($data->causer_id)){
     			return User::find($data->causer_id)->name;
     		}else{

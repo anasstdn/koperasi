@@ -15,7 +15,8 @@
                 <div class="content-header bg-white-5">
                     <!-- Logo -->
                     <a class="font-w600 text-dual" href="index.html">
-                        <i class="fa fa-circle-notch text-primary"></i>&nbsp
+                        {{-- <i class="fa fa-circle-notch text-primary"></i>&nbsp --}}
+                        <img class="rounded" src="{{asset('images/')}}/logo/logo160.png" alt="Header Avatar" style="width: 40px;">&nbsp
                         <span class="smini-hide">
                          <span class="font-w600">NubesKop</span>
                         </span>

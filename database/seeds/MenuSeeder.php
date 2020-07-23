@@ -20,6 +20,8 @@ class MenuSeeder extends Seeder
     	Menu::truncate();
     	$this->menuHome();
     	$this->menuAcl();
+        $this->menuActivity();
+        $this->menuMaster();
     }
 
     private function menuHome()
@@ -109,5 +111,77 @@ class MenuSeeder extends Seeder
     	)
     );
     	$submenu->save();
+    }
+
+    private function menuActivity()
+    {
+        $this->command->info('Menu Activity Seeder');
+        $permission = Permission::firstOrNew(array(
+            'name'=>'read-activity'
+        ));
+        $permission->display_name = 'Read Activity Menus';
+        $permission->save();
+        $menu = Menu::firstOrNew(array(
+            'name'=>'Riwayat Pengguna',
+            'permission_id'=>$permission->id,
+            'ordinal'=>1,
+            'parent_status'=>'N',
+            'url'=>'activity-log',
+        ));
+        $menu->icon = 'si-refresh';
+        $menu->save();
+    }
+
+    private function menuMaster(){
+        $this->command->info('Menu Master Seeder');
+        $permission = Permission::firstOrNew(array(
+            'name'=>'read-master-menu'
+        ));
+        $permission->display_name = 'Read Master Menus';
+        $permission->save();
+        $menu = Menu::firstOrNew(array(
+            'name'=>'Master',
+            'permission_id'=>$permission->id,
+            'ordinal'=>1,
+            'parent_status'=>'Y'
+        ));
+        $menu->icon = 'si-wrench';
+        $menu->save();
+
+          //create SUBMENU master
+        $permission = Permission::firstOrNew(array(
+            'name'=>'read-master-umum-menu',
+        ));
+        $permission->display_name = 'Read Master Umum Menu';
+        $permission->save();
+
+        $submenu = Menu::firstOrNew(array(
+            'name'=>'Master Data Umum',
+            'parent_id'=>$menu->id,
+            'permission_id'=>$permission->id,
+            'ordinal'=>2,
+            'parent_status'=>'Y',
+        )
+    );
+        $submenu->save();
+
+             //create SUBMENU master
+        $permission = Permission::firstOrNew(array(
+            'name'=>'read-provinsi',
+        ));
+        $permission->display_name = 'Read Provinsi Menu';
+        $permission->save();
+
+        $subsubmenu = Menu::firstOrNew(array(
+            'name'=>'Provinsi',
+            'parent_id'=>$submenu->id,
+            'permission_id'=>$permission->id,
+            'ordinal'=>3,
+            'parent_status'=>'N',
+            'url'=>'provinsi',
+        )
+    );
+        $subsubmenu->save();
+
     }
 }

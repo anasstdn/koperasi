@@ -47,3 +47,12 @@ Route::prefix('activity-log')->group(function() {
     Route::get('/', 'ActivityLogController@index');
     Route::match(['get', 'post'],'/get-data','ActivityLogController@getData');
 });
+
+Route::prefix('provinsi')->group(function() {
+    Route::get('/', 'ProvinsiController@index');
+    Route::match(['get', 'post'],'/get-data','ProvinsiController@getData');
+    Route::match(['get','post'],'/store','ProvinsiController@store');
+    Route::match(['get', 'post'],'/edit/{id}','ProvinsiController@edit');
+    Route::match(['get','post'],'/update','ProvinsiController@update');
+    Route::get('/{id}/delete', 'ProvinsiController@destroy');
+});
