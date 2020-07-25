@@ -24,10 +24,10 @@ class ProvinsiController extends Controller
 	}
 
 	public function index()
-    {
-        $this->menuAccess(\Auth::user(),'Provinsi');
-        return view('master.provinsi.index');
-    }
+  {
+    $this->menuAccess(\Auth::user(),'Provinsi');
+    return view('master.provinsi.index');
+  }
 
     public function getData()
     {

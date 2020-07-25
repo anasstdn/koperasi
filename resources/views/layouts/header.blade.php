@@ -49,6 +49,7 @@
 
                     <!-- Right Section -->
                     <div class="d-flex align-items-center">
+                        <span id="clockbox" class="font-w600 font-size-md text-white-op d-flex"></span>
                         <!-- User Dropdown -->
                         <div class="dropdown d-inline-block ml-2">
                             <button type="button" class="btn btn-sm btn-dual" id="page-header-user-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

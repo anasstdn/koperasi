@@ -71,9 +71,11 @@
 											<label for="block-form1-username">Nama Provinsi</label>
                                             <select class="js-select2 form-control" id="id_provinsi" name="id_provinsi" style="width: 100%;" data-placeholder="">
                                                 <option value="">-Silahkan Pilih-</option>
+                                                @if(isset($provinsi) && !$provinsi->isEmpty())
                                                 @foreach($provinsi as $r)
                                                 <option value="{{$r->id}}">{{$r->nama_provinsi}}</option>
                                                 @endforeach
+                                                @endif
                                             </select>
                                         </div>
 										<br/>

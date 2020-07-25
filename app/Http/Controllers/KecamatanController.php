@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Validator;
 class KecamatanController extends Controller
 {
     //
-    use ActivityTraits;
+  use ActivityTraits;
 
 	public function __construct()
 	{

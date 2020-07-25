@@ -11,7 +11,7 @@
 	<div class="content content-full">
 		<div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center">
 			<h1 class="flex-sm-fill h3 my-2">
-				Kecamatan
+				Kelurahan
 			</h1>
 		</div>
 	</div>
@@ -32,10 +32,12 @@
 							<thead>
 								<tr>
 									<th class="text-center" style="width: 80px;">No</th>
-									<th>Kode Kecamatan</th>
+									<th>Kode Kelurahan</th>
+                                    <th>Nama Kelurahan</th>
 									<th>Nama Kecamatan</th>
 									<th>Nama Kabupaten</th>
                                     <th>Nama Provinsi</th>
+                                    <th>Kodepos</th>
 									<th style="width: 15%;">Aksi</th>
 								</tr>
 							</thead>
@@ -61,20 +63,24 @@
 								<div class="row justify-content-center py-sm-3 py-md-5">
 									<div class="col-sm-10 col-md-8">
 										<div class="form-group">
-											<label for="block-form1-name">Kode Kecamatan</label>
-											<input type="text" class="form-control form-control-alt form-control-sm" id="kode_kecamatan" name="kode_kecamatan">
+											<label for="block-form1-name">Kode Kelurahan</label>
+											<input type="text" class="form-control form-control-alt form-control-sm" id="kode_kelurahan" name="kode_kelurahan">
 										</div>
+										<div class="form-group">
+											<label for="block-form1-username">Nama Kelurahan</label>
+											<input type="text" class="form-control form-control-alt form-control-sm" id="nama_kelurahan" name="nama_kelurahan">
+										</div>
+                                        <div class="form-group">
+                                            <label for="block-form1-username">Kodepos</label>
+                                            <input type="text" class="form-control form-control-alt form-control-sm" id="kodepos" name="kodepos">
+                                        </div>
 										<div class="form-group">
 											<label for="block-form1-username">Nama Kecamatan</label>
-											<input type="text" class="form-control form-control-alt form-control-sm" id="nama_kecamatan" name="nama_kecamatan">
-										</div>
-										<div class="form-group">
-											<label for="block-form1-username">Nama Kabupaten</label>
-                                            <select class="js-select2 form-control" id="id_kabupaten" name="id_kabupaten" style="width: 100%;" data-placeholder="">
+                                            <select class="js-select2 form-control" id="id_kecamatan" name="id_kecamatan" style="width: 100%;" data-placeholder="">
                                                 <option value="">-Silahkan Pilih-</option>
-                                                @if(isset($kabupaten) && !$kabupaten->isEmpty())
-                                                @foreach($kabupaten as $r)
-                                                <option value="{{$r->id}}">{{$r->nama_kabupaten}},&nbsp{{$r->provinsi->nama_provinsi}}</option>
+                                                @if(isset($kecamatan) && !$kecamatan->isEmpty())
+                                                @foreach($kecamatan as $r)
+                                                <option value="{{$r->id}}">{{$r->nama_kecamatan}},&nbsp{{$r->kabupaten->nama_kabupaten}},&nbsp{{$r->kabupaten->provinsi->nama_provinsi}}</option>
                                                 @endforeach
                                                 @endif
                                             </select>
@@ -116,10 +122,10 @@
 		$("#tambah").click(function(){
 			$("#table_width").attr('class', "col-lg-6");
 			$("#createNewItemDiv").toggleClass('hidden');
-			$("#judul").html('Tambah Kecamatan');
+			$("#judul").html('Tambah Kelurahan');
             $('#mode').val('add');
-            $('#form').prop('action', '{{url('kecamatan/store')}}');
-            $('#id_kabupaten').val('').trigger('change');
+            $('#form').prop('action', '{{url('kelurahan/store')}}');
+            $('#id_kecamatan').val('').trigger('change');
 		});
 
 		$(".cancelAddItem").click(function(){
@@ -128,7 +134,7 @@
 			$("#createNewItemDiv").addClass('hidden');
 			$("#createNewItemDiv").fadeOut();
             $('#mode').val('');
-            $('#id_kabupaten').val('').trigger('change');
+            $('#id_kecamatan').val('').trigger('change');
 		});
 
 		$('#tabel').dataTable({
@@ -140,17 +146,19 @@
 			processing : true,
 			serverSide : true,
 			ajax : {
-				url:"{{ url('kecamatan/get-data') }}",
+				url:"{{ url('kelurahan/get-data') }}",
 				data: function (d) {
 
 				}
 			},
 			columns: [
             {data: 'nomor', name: 'nomor'},
-            {data: 'kode_kecamatan', name: 'kode_kecamatan'},
+            {data: 'kode_kelurahan', name: 'kode_kelurahan'},
+            {data: 'nama_kelurahan', name: 'nama_kelurahan'},
             {data: 'nama_kecamatan', name: 'nama_kecamatan'},
             {data: 'nama_kabupaten', name: 'nama_kabupaten'},
             {data: 'nama_provinsi', name: 'nama_provinsi'},
+            {data: 'kodepos', name: 'kodepos'},
             {data: 'action', name: 'action', orderable: false, searchable: false},
         ],
         language: {
@@ -194,28 +202,40 @@
             debug: false,
             errorClass: 'invalid-feedback',
             rules: {
-                'kode_kecamatan': {
+                'kode_kelurahan': {
                     required: true,
                     minlength: 1
                 },
-                'nama_kecamatan': {
+                'nama_kelurahan': {
                     required: true,
                     minlength: 1
                 },
-                'id_kabupaten': {
+                'kodepos': {
+                    required: true,
+                    minlength: 5,
+                    minlength: 5,
+                    number:true
+                },
+                'id_kecamatan': {
                     required: true,
                 },
             },
             messages: {
-                'kode_kecamatan': {
+                'kode_kelurahan': {
                     required: 'Silahkan isi form',
                     minlength: 'Karakter minimal diisi 1'
                 },
-                'nama_kecamatan': {
+                'nama_kelurahan': {
                     required: 'Silahkan isi form',
                     minlength: 'Karakter minimal diisi 1'
                 },
-                'id_kabupaten': {
+                'kodepos': {
+                    required: 'Silahkan isi form',
+                    minlength: 'Karakter minimal diisi 5',
+                    maxlength: 'Karakter minimal diisi 5',
+                    number:'Silahkan isi format angka'
+                },
+                'id_kecamatan': {
                     required: 'Silahkan isi form',
                 },
             }
@@ -232,19 +252,20 @@
 <script type="text/javascript">
    function ubah_data(id){
     $.ajax({
-        url : "{{url('kecamatan/edit/')}}/" + id,
+        url : "{{url('kelurahan/edit/')}}/" + id,
         type: "GET",
         dataType: "JSON",
         success: function(data)
         {
             $("#table_width").attr('class', "col-lg-6");
             $("#createNewItemDiv").toggleClass('hidden');
-            $("#judul").html('Edit Kecamatan');
+            $("#judul").html('Edit Kelurahan');
             $('#mode').val('edit');
-            $('#form').prop('action', '{{url('kecamatan/update')}}');
-            $('#kode_kecamatan').val(data.data.kode_kecamatan);
-            $('#nama_kecamatan').val(data.data.nama_kecamatan);
-            $('#id_kabupaten').val(data.data.id_kabupaten).trigger('change');
+            $('#form').prop('action', '{{url('kelurahan/update')}}');
+            $('#kode_kelurahan').val(data.data.kode_kelurahan);
+            $('#nama_kelurahan').val(data.data.nama_kelurahan);
+            $('#kodepos').val(data.data.kodepos);
+            $('#id_kecamatan').val(data.data.id_kecamatan).trigger('change');
             $('#id').val(id);
         },
         error: function (jqXHR, textStatus, errorThrown)

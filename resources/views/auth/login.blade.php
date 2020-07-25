@@ -91,10 +91,10 @@
                                         <div class="block-header">
                                             <h3 class="block-title">Masuk</h3>
                                             <div class="block-options">
-                                                <a class="btn-block-option font-size-sm" href="op_auth_reminder.html">Lupa PIN?</a>
-                                                <a class="btn-block-option" href="op_auth_signup.html" data-toggle="tooltip" data-placement="left" title="New Account">
-                                                    <i class="fa fa-user-plus"></i>
-                                                </a>
+                                                {{-- <a class="btn-block-option font-size-sm" href="op_auth_reminder.html">Lupa PIN?</a> --}}
+                                                {{-- <a class="btn-block-option" href="op_auth_signup.html" data-toggle="tooltip" data-placement="left" title="New Account"> --}}
+                                                    {{-- <i class="fa fa-user-plus"></i> --}}
+                                                {{-- </a> --}}
                                             </div>
                                         </div>
                                         <div class="block-content">
@@ -134,7 +134,7 @@
                                                             </span>
                                                             @endif
                                                         </div>
-                                                        <div class="form-group">
+                                                       {{--  <div class="form-group">
                                                             <div class="d-md-flex align-items-md-center justify-content-md-between">
                                                                 <div class="custom-control custom-switch">
                                                                     <input type="checkbox" class="custom-control-input" id="remember" name="remember" {{ old('remember') ? 'checked' : '' }}>
@@ -144,7 +144,7 @@
                                                                     <a class="font-size-sm" href="op_auth_reminder2.html">Lupa PIN?</a>
                                                                 </div>
                                                             </div>
-                                                        </div>
+                                                        </div> --}}
                                                     </div>
                                                     <div class="form-group row">
                                                         <div class="col-md-6 col-xl-5">

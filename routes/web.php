@@ -74,3 +74,57 @@ Route::prefix('kecamatan')->group(function() {
     Route::match(['get','post'],'/update','KecamatanController@update');
     Route::get('/{id}/delete', 'KecamatanController@destroy');
 });
+
+Route::prefix('kelurahan')->group(function() {
+    Route::get('/', 'KelurahanController@index');
+    Route::match(['get', 'post'],'/get-data','KelurahanController@getData');
+    Route::match(['get','post'],'/store','KelurahanController@store');
+    Route::match(['get', 'post'],'/edit/{id}','KelurahanController@edit');
+    Route::match(['get','post'],'/update','KelurahanController@update');
+    Route::get('/{id}/delete', 'KelurahanController@destroy');
+});
+
+Route::prefix('status-perkawinan')->group(function() {
+    Route::get('/', 'StatusPerkawinanController@index');
+    Route::match(['get', 'post'],'/get-data','StatusPerkawinanController@getData');
+    Route::match(['get','post'],'/store','StatusPerkawinanController@store');
+    Route::match(['get', 'post'],'/edit/{id}','StatusPerkawinanController@edit');
+    Route::match(['get','post'],'/update','StatusPerkawinanController@update');
+    Route::get('/{id}/delete', 'StatusPerkawinanController@destroy');
+});
+
+Route::prefix('agama')->group(function() {
+    Route::get('/', 'AgamaController@index');
+    Route::match(['get', 'post'],'/get-data','AgamaController@getData');
+    Route::match(['get','post'],'/store','AgamaController@store');
+    Route::match(['get', 'post'],'/edit/{id}','AgamaController@edit');
+    Route::match(['get','post'],'/update','AgamaController@update');
+    Route::get('/{id}/delete', 'AgamaController@destroy');
+});
+
+Route::prefix('departement')->group(function() {
+    Route::get('/', 'DepartementController@index');
+    Route::match(['get', 'post'],'/get-data','DepartementController@getData');
+    Route::match(['get','post'],'/store','DepartementController@store');
+    Route::match(['get', 'post'],'/edit/{id}','DepartementController@edit');
+    Route::match(['get','post'],'/update','DepartementController@update');
+    Route::get('/{id}/delete', 'DepartementController@destroy');
+});
+
+Route::prefix('golongan')->group(function() {
+    Route::get('/', 'GolonganController@index');
+    Route::match(['get', 'post'],'/get-data','GolonganController@getData');
+    Route::match(['get','post'],'/store','GolonganController@store');
+    Route::match(['get', 'post'],'/edit/{id}','GolonganController@edit');
+    Route::match(['get','post'],'/update','GolonganController@update');
+    Route::get('/{id}/delete', 'GolonganController@destroy');
+});
+
+Route::prefix('jabatan')->group(function() {
+    Route::get('/', 'JabatanController@index');
+    Route::match(['get', 'post'],'/get-data','JabatanController@getData');
+    Route::match(['get','post'],'/store','JabatanController@store');
+    Route::match(['get', 'post'],'/edit/{id}','JabatanController@edit');
+    Route::match(['get','post'],'/update','JabatanController@update');
+    Route::get('/{id}/delete', 'JabatanController@destroy');
+});

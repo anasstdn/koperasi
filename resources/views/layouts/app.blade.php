@@ -144,7 +144,7 @@
                             <a class="font-w600" href="#" target="_blank">KSU Pijar Tirta Manunggal</a>
                         </div>
                         <div class="col-sm-6 order-sm-1 py-1 text-center text-sm-left">
-                            <a class="font-w600" href="https://1.envato.market/xWy" target="_blank">Nusantara Bersatu</a> &copy; <span data-toggle="year-copy"></span>
+                            <a class="font-w600" href="https://1.envato.market/xWy" target="_blank">NubesKop Version 1.0 </a> &copy; <span data-toggle="year-copy"></span>
                         </div>
                     </div>
                 </div>
@@ -339,6 +339,23 @@
           toastr.warning(message, 'Peringatan', opts);
       }
   }
+
+  var tday=["Minggu","Senin","Selasa","Rabu","Kamis","Jumat","Sabtu"];
+  var tmonth=["Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember"];
+
+  function GetClock(){
+    var d=new Date();
+    var nday=d.getDay(),nmonth=d.getMonth(),ndate=d.getDate(),nyear=d.getFullYear();
+    var nhour=d.getHours(),nmin=d.getMinutes(),nsec=d.getSeconds();
+    if(nmin<=9) nmin="0"+nmin;
+    if(nsec<=9) nsec="0"+nsec;
+
+    var clocktext=""+tday[nday]+", "+tmonth[nmonth]+" "+ndate+" "+nyear+" "+nhour+":"+nmin+":"+nsec+"";
+    document.getElementById('clockbox').innerHTML=clocktext;
+}
+
+GetClock();
+setInterval(GetClock,1000);
 
 </script>
 
