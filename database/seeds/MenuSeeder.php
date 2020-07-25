@@ -335,5 +335,55 @@ class MenuSeeder extends Seeder
     );
         $subsubmenu->save();
 
+        $permission = Permission::firstOrNew(array(
+            'name'=>'read-master-kas-menu',
+        ));
+        $permission->display_name = 'Read Master Kas Menu';
+        $permission->save();
+
+        $submenu = Menu::firstOrNew(array(
+            'name'=>'Master Data Kas',
+            'parent_id'=>$menu->id,
+            'permission_id'=>$permission->id,
+            'ordinal'=>2,
+            'parent_status'=>'Y',
+        )
+    );
+        $submenu->save();
+
+         $permission = Permission::firstOrNew(array(
+            'name'=>'read-kategori-transaksi',
+        ));
+        $permission->display_name = 'Read Kategori Transaksi Menu';
+        $permission->save();
+
+        $subsubmenu = Menu::firstOrNew(array(
+            'name'=>'Kategori Transaksi',
+            'parent_id'=>$submenu->id,
+            'permission_id'=>$permission->id,
+            'ordinal'=>3,
+            'parent_status'=>'N',
+            'url'=>'kategori-transaksi',
+        )
+    );
+        $subsubmenu->save();
+
+        $permission = Permission::firstOrNew(array(
+            'name'=>'read-jenis-transaksi',
+        ));
+        $permission->display_name = 'Read Jenis Transaksi Menu';
+        $permission->save();
+
+        $subsubmenu = Menu::firstOrNew(array(
+            'name'=>'Jenis Transaksi',
+            'parent_id'=>$submenu->id,
+            'permission_id'=>$permission->id,
+            'ordinal'=>3,
+            'parent_status'=>'N',
+            'url'=>'jenis-transaksi',
+        )
+    );
+        $subsubmenu->save();
+
     }
 }

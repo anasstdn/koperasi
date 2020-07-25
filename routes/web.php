@@ -128,3 +128,21 @@ Route::prefix('jabatan')->group(function() {
     Route::match(['get','post'],'/update','JabatanController@update');
     Route::get('/{id}/delete', 'JabatanController@destroy');
 });
+
+Route::prefix('kategori-transaksi')->group(function() {
+    Route::get('/', 'KategoriTransaksiController@index');
+    Route::match(['get', 'post'],'/get-data','KategoriTransaksiController@getData');
+    Route::match(['get','post'],'/store','KategoriTransaksiController@store');
+    Route::match(['get', 'post'],'/edit/{id}','KategoriTransaksiController@edit');
+    Route::match(['get','post'],'/update','KategoriTransaksiController@update');
+    Route::get('/{id}/delete', 'KategoriTransaksiController@destroy');
+});
+
+Route::prefix('jenis-transaksi')->group(function() {
+    Route::get('/', 'JenisTransaksiController@index');
+    Route::match(['get', 'post'],'/get-data','JenisTransaksiController@getData');
+    Route::match(['get','post'],'/store','JenisTransaksiController@store');
+    Route::match(['get', 'post'],'/edit/{id}','JenisTransaksiController@edit');
+    Route::match(['get','post'],'/update','JenisTransaksiController@update');
+    Route::get('/{id}/delete', 'JenisTransaksiController@destroy');
+});

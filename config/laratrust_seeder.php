@@ -24,6 +24,9 @@ return [
                     'departement'           => 'r',
                     'golongan'              => 'r',
                     'jabatan'               => 'r',
+                'master-kas-menu'           => 'r',
+                    'kategori-transaksi'    => 'r',
+                    'jenis-transaksi'       => 'r',
         ],
         'superadministrator' => [
             'users'                         => 'c,r,u,d',
@@ -47,6 +50,9 @@ return [
                     'departement'           => 'r',
                     'golongan'              => 'r',
                     'jabatan'               => 'r',
+                'master-kas-menu'           => 'r',
+                    'kategori-transaksi'    => 'r',
+                    'jenis-transaksi'       => 'r',
         ],
         // 'administrator' => [
         //     'users' => 'c,r,u,d',
