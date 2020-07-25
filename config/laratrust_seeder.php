@@ -16,6 +16,7 @@ return [
                 'master-umum-menu'  => 'r',
                     'provinsi'      => 'r',
                     'kabupaten'     => 'r',
+                    'kecamatan'     => 'r',
         ],
         'superadministrator' => [
             'users'                 => 'c,r,u,d',
@@ -31,6 +32,7 @@ return [
                 'master-umum-menu'  => 'r',
                     'provinsi'      => 'r',
                     'kabupaten'     => 'r',
+                    'kecamatan'     => 'r',
         ],
         // 'administrator' => [
         //     'users' => 'c,r,u,d',

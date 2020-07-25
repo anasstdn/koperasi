@@ -11,7 +11,7 @@
 	<div class="content content-full">
 		<div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center">
 			<h1 class="flex-sm-fill h3 my-2">
-				Kabupaten
+				Kecamatan
 			</h1>
 		</div>
 	</div>
@@ -32,9 +32,10 @@
 							<thead>
 								<tr>
 									<th class="text-center" style="width: 80px;">No</th>
-									<th>Kode Kabupaten</th>
+									<th>Kode Kecamatan</th>
+									<th>Nama Kecamatan</th>
 									<th>Nama Kabupaten</th>
-									<th>Nama Provinsi</th>
+                                    <th>Nama Provinsi</th>
 									<th style="width: 15%;">Aksi</th>
 								</tr>
 							</thead>
@@ -60,19 +61,19 @@
 								<div class="row justify-content-center py-sm-3 py-md-5">
 									<div class="col-sm-10 col-md-8">
 										<div class="form-group">
-											<label for="block-form1-name">Kode Kabupaten</label>
-											<input type="text" class="form-control form-control-alt form-control-sm" id="kode_kabupaten" name="kode_kabupaten">
+											<label for="block-form1-name">Kode Kecamatan</label>
+											<input type="text" class="form-control form-control-alt form-control-sm" id="kode_kecamatan" name="kode_kecamatan">
+										</div>
+										<div class="form-group">
+											<label for="block-form1-username">Nama Kecamatan</label>
+											<input type="text" class="form-control form-control-alt form-control-sm" id="nama_kecamatan" name="nama_kecamatan">
 										</div>
 										<div class="form-group">
 											<label for="block-form1-username">Nama Kabupaten</label>
-											<input type="text" class="form-control form-control-alt form-control-sm" id="nama_kabupaten" name="nama_kabupaten">
-										</div>
-										<div class="form-group">
-											<label for="block-form1-username">Nama Provinsi</label>
-                                            <select class="js-select2 form-control" id="id_provinsi" name="id_provinsi" style="width: 100%;" data-placeholder="">
+                                            <select class="js-select2 form-control" id="id_kabupaten" name="id_kabupaten" style="width: 100%;" data-placeholder="">
                                                 <option value="">-Silahkan Pilih-</option>
-                                                @foreach($provinsi as $r)
-                                                <option value="{{$r->id}}">{{$r->nama_provinsi}}</option>
+                                                @foreach($kabupaten as $r)
+                                                <option value="{{$r->id}}">{{$r->nama_kabupaten}},&nbsp{{$r->provinsi->nama_provinsi}}</option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -113,10 +114,10 @@
 		$("#tambah").click(function(){
 			$("#table_width").attr('class', "col-lg-6");
 			$("#createNewItemDiv").toggleClass('hidden');
-			$("#judul").html('Tambah Kabupaten');
+			$("#judul").html('Tambah Kecamatan');
             $('#mode').val('add');
-            $('#form').prop('action', '{{url('kabupaten/store')}}');
-            $('#id_provinsi').val('').trigger('change');
+            $('#form').prop('action', '{{url('kecamatan/store')}}');
+            $('#id_kabupaten').val('').trigger('change');
 		});
 
 		$(".cancelAddItem").click(function(){
@@ -125,7 +126,7 @@
 			$("#createNewItemDiv").addClass('hidden');
 			$("#createNewItemDiv").fadeOut();
             $('#mode').val('');
-            $('#id_provinsi').val('').trigger('change');
+            $('#id_kabupaten').val('').trigger('change');
 		});
 
 		$('#tabel').dataTable({
@@ -137,14 +138,15 @@
 			processing : true,
 			serverSide : true,
 			ajax : {
-				url:"{{ url('kabupaten/get-data') }}",
+				url:"{{ url('kecamatan/get-data') }}",
 				data: function (d) {
 
 				}
 			},
 			columns: [
             {data: 'nomor', name: 'nomor'},
-            {data: 'kode_kabupaten', name: 'kode_kabupaten'},
+            {data: 'kode_kecamatan', name: 'kode_kecamatan'},
+            {data: 'nama_kecamatan', name: 'nama_kecamatan'},
             {data: 'nama_kabupaten', name: 'nama_kabupaten'},
             {data: 'nama_provinsi', name: 'nama_provinsi'},
             {data: 'action', name: 'action', orderable: false, searchable: false},
@@ -190,28 +192,28 @@
             debug: false,
             errorClass: 'invalid-feedback',
             rules: {
-                'kode_kabupaten': {
+                'kode_kecamatan': {
                     required: true,
                     minlength: 1
                 },
-                'nama_kabupaten': {
+                'nama_kecamatan': {
                     required: true,
                     minlength: 1
                 },
-                'id_provinsi': {
+                'id_kabupaten': {
                     required: true,
                 },
             },
             messages: {
-                'kode_kabupaten': {
+                'kode_kecamatan': {
                     required: 'Silahkan isi form',
                     minlength: 'Karakter minimal diisi 1'
                 },
-                'nama_kabupaten': {
+                'nama_kecamatan': {
                     required: 'Silahkan isi form',
                     minlength: 'Karakter minimal diisi 1'
                 },
-                'id_provinsi': {
+                'id_kabupaten': {
                     required: 'Silahkan isi form',
                 },
             }
@@ -228,19 +230,19 @@
 <script type="text/javascript">
    function ubah_data(id){
     $.ajax({
-        url : "{{url('kabupaten/edit/')}}/" + id,
+        url : "{{url('kecamatan/edit/')}}/" + id,
         type: "GET",
         dataType: "JSON",
         success: function(data)
         {
             $("#table_width").attr('class', "col-lg-6");
             $("#createNewItemDiv").toggleClass('hidden');
-            $("#judul").html('Edit Kabupaten');
+            $("#judul").html('Edit Kecamatan');
             $('#mode').val('edit');
-            $('#form').prop('action', '{{url('kabupaten/update')}}');
-            $('#kode_kabupaten').val(data.data.kode_kabupaten);
-            $('#nama_kabupaten').val(data.data.nama_kabupaten);
-            $('#id_provinsi').val(data.data.id_provinsi).trigger('change');
+            $('#form').prop('action', '{{url('kecamatan/update')}}');
+            $('#kode_kecamatan').val(data.data.kode_kecamatan);
+            $('#nama_kecamatan').val(data.data.nama_kecamatan);
+            $('#id_kabupaten').val(data.data.id_kabupaten).trigger('change');
             $('#id').val(id);
         },
         error: function (jqXHR, textStatus, errorThrown)

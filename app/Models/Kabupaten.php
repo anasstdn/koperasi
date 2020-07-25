@@ -7,6 +7,7 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -20,6 +21,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property Carbon|null $updated_at
  * 
  * @property Provinsi $provinsi
+ * @property Collection|Kecamatan[] $kecamatans
  *
  * @package App\Models
  */
@@ -40,5 +42,10 @@ class Kabupaten extends Model
 	public function provinsi()
 	{
 		return $this->belongsTo(Provinsi::class, 'id_provinsi');
+	}
+
+	public function kecamatans()
+	{
+		return $this->hasMany(Kecamatan::class, 'id_kabupaten');
 	}
 }

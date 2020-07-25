@@ -65,3 +65,12 @@ Route::prefix('kabupaten')->group(function() {
     Route::match(['get','post'],'/update','KabupatenController@update');
     Route::get('/{id}/delete', 'KabupatenController@destroy');
 });
+
+Route::prefix('kecamatan')->group(function() {
+    Route::get('/', 'KecamatanController@index');
+    Route::match(['get', 'post'],'/get-data','KecamatanController@getData');
+    Route::match(['get','post'],'/store','KecamatanController@store');
+    Route::match(['get', 'post'],'/edit/{id}','KecamatanController@edit');
+    Route::match(['get','post'],'/update','KecamatanController@update');
+    Route::get('/{id}/delete', 'KecamatanController@destroy');
+});
