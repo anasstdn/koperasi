@@ -62,34 +62,33 @@
                                     <img class="img-avatar img-avatar48 img-avatar-thumb" src="assets/media/avatars/avatar10.jpg" alt="">
                                 </div>
                                 <div class="p-2">
-                                    <h5 class="dropdown-header text-uppercase">User Options</h5>
-                                    <a class="dropdown-item d-flex align-items-center justify-content-between" href="be_pages_generic_inbox.html">
+                                    <h5 class="dropdown-header text-uppercase">Pengaturan Pengguna</h5>
+                          {{--           <a class="dropdown-item d-flex align-items-center justify-content-between" href="be_pages_generic_inbox.html">
                                         <span>Inbox</span>
                                         <span>
                                             <span class="badge badge-pill badge-primary">3</span>
                                             <i class="si si-envelope-open ml-1"></i>
                                         </span>
-                                    </a>
-                                    <a class="dropdown-item d-flex align-items-center justify-content-between" href="be_pages_generic_profile.html">
-                                        <span>Profile</span>
+                                    </a> --}}
+                                    <a class="dropdown-item d-flex align-items-center justify-content-between" href="{{url('/profile')}}">
+                                        <span>Profil</span>
                                         <span>
-                                            <span class="badge badge-pill badge-success">1</span>
                                             <i class="si si-user ml-1"></i>
                                         </span>
                                     </a>
                                     <a class="dropdown-item d-flex align-items-center justify-content-between" href="javascript:void(0)">
-                                        <span>Settings</span>
+                                        <span>Pengaturan</span>
                                         <i class="si si-settings"></i>
                                     </a>
                                     <div role="separator" class="dropdown-divider"></div>
-                                    <h5 class="dropdown-header text-uppercase">Actions</h5>
-                                    <a class="dropdown-item d-flex align-items-center justify-content-between" href="op_auth_lock.html">
+                                    <h5 class="dropdown-header text-uppercase">Aksi</h5>
+                          {{--           <a class="dropdown-item d-flex align-items-center justify-content-between" href="op_auth_lock.html">
                                         <span>Lock Account</span>
                                         <i class="si si-lock ml-1"></i>
-                                    </a>
+                                    </a> --}}
                                     <a class="dropdown-item d-flex align-items-center justify-content-between" href="{{ route('logout') }}" onclick="event.preventDefault();
                                 document.getElementById('logout-form').submit();">
-                                        <span>Log Out</span>
+                                        <span>Keluar</span>
                                         <i class="si si-logout ml-1"></i>
                                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                             {{ csrf_field() }}

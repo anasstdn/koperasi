@@ -29,6 +29,7 @@
         <link rel="stylesheet" href="{{asset('oneui/')}}/src/assets/js/plugins/datatables/buttons-bs4/buttons.bootstrap4.min.css">
         <link rel="stylesheet" href="{{asset('oneui/')}}/src/assets/js/plugins/select2/css/select2.min.css">
         <link rel="stylesheet" href="{{asset('oneui/')}}/src/assets/js/plugins/sweetalert2/sweetalert2.min.css">
+        <link rel="stylesheet" href="{{asset('oneui/')}}/src/assets/js/plugins/flatpickr/flatpickr.min.css">
 
         <!-- Stylesheets -->
         <!-- Fonts and OneUI framework -->
@@ -273,6 +274,12 @@
         <script src="{{asset('oneui/')}}/src/assets/js/plugins/sweetalert2/sweetalert2.min.js"></script>
 
         <script src="{{asset('oneui/')}}/src/assets/js/pages/be_comp_dialogs.min.js"></script>
+
+        <script src="{{asset('oneui/')}}/src/assets/js/plugins/flatpickr/flatpickr.min.js"></script>
+
+        <script src="{{asset('oneui/')}}/src/assets/js/plugins/moment/moment.min.js"></script>
+
+        <script>jQuery(function(){ One.helpers(['flatpickr']); });</script>
 
         <script type="text/javascript">
             @if ($errors->any())

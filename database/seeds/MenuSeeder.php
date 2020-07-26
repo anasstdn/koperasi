@@ -165,6 +165,23 @@ class MenuSeeder extends Seeder
     );
         $submenu->save();
 
+        $permission = Permission::firstOrNew(array(
+            'name'=>'read-agama',
+        ));
+        $permission->display_name = 'Read Agama Menu';
+        $permission->save();
+
+        $subsubmenu = Menu::firstOrNew(array(
+            'name'=>'Agama',
+            'parent_id'=>$submenu->id,
+            'permission_id'=>$permission->id,
+            'ordinal'=>3,
+            'parent_status'=>'N',
+            'url'=>'agama',
+        )
+    );
+        $subsubmenu->save();
+
              //create SUBMENU master
         $permission = Permission::firstOrNew(array(
             'name'=>'read-provinsi',
@@ -235,6 +252,23 @@ class MenuSeeder extends Seeder
         $subsubmenu->save();
 
         $permission = Permission::firstOrNew(array(
+            'name'=>'read-jenis-kelamin',
+        ));
+        $permission->display_name = 'Read Jenis Kelamin Menu';
+        $permission->save();
+
+        $subsubmenu = Menu::firstOrNew(array(
+            'name'=>'Jenis Kelamin',
+            'parent_id'=>$submenu->id,
+            'permission_id'=>$permission->id,
+            'ordinal'=>3,
+            'parent_status'=>'N',
+            'url'=>'jenis-kelamin',
+        )
+    );
+        $subsubmenu->save();
+
+        $permission = Permission::firstOrNew(array(
             'name'=>'read-status-perkawinan',
         ));
         $permission->display_name = 'Read Status Perkawinan Menu';
@@ -251,22 +285,6 @@ class MenuSeeder extends Seeder
     );
         $subsubmenu->save();
 
-        $permission = Permission::firstOrNew(array(
-            'name'=>'read-agama',
-        ));
-        $permission->display_name = 'Read Agama Menu';
-        $permission->save();
-
-        $subsubmenu = Menu::firstOrNew(array(
-            'name'=>'Agama',
-            'parent_id'=>$submenu->id,
-            'permission_id'=>$permission->id,
-            'ordinal'=>3,
-            'parent_status'=>'N',
-            'url'=>'agama',
-        )
-    );
-        $subsubmenu->save();
 
         $permission = Permission::firstOrNew(array(
             'name'=>'read-master-kepegawaian-menu',

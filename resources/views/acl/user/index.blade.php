@@ -62,9 +62,13 @@
 								<div class="row justify-content-center py-sm-3 py-md-5">
 									<div class="col-sm-10 col-md-8">
 										<div class="form-group">
-											<label for="block-form1-name">Nama</label>
-											<input type="text" class="form-control form-control-alt form-control-sm" id="name" name="name">
+											<label for="block-form1-name">Nama Depan</label>
+											<input type="text" class="form-control form-control-alt form-control-sm" id="nama_depan" name="nama_depan">
 										</div>
+                                        <div class="form-group">
+                                            <label for="block-form1-name">Nama Belakang</label>
+                                            <input type="text" class="form-control form-control-alt form-control-sm" id="nama_belakang" name="nama_belakang">
+                                        </div>
 										<div class="form-group">
 											<label for="block-form1-username">Username</label>
 											<input type="text" class="form-control form-control-alt form-control-sm" id="username" name="username">
@@ -220,7 +224,11 @@
             debug: false,
             errorClass: 'invalid-feedback',
             rules: {
-                'name': {
+                'nama_depan': {
+                    required: true,
+                    minlength: 1
+                },
+                'nama_belakang': {
                     required: true,
                     minlength: 1
                 },
@@ -311,7 +319,11 @@
                 },
             },
             messages: {
-                'name': {
+                'nama_depan': {
+                    required: 'Silahkan isi form',
+                    minlength: 'Karakter minimal diisi 1'
+                },
+                'nama_belakang': {
                     required: 'Silahkan isi form',
                     minlength: 'Karakter minimal diisi 1'
                 },
@@ -355,7 +367,8 @@
             $("#judul").html('Edit Pengguna');
             $('#mode').val('edit');
             $('#form').prop('action', '{{url('user/update')}}');
-            $('#name').val(data.data.name);
+            $('#nama_depan').val(data.data.nama_depan);
+            $('#nama_belakang').val(data.data.nama_belakang);
             $('#username').val(data.data.username);
             $('#email').val(data.data.email);
             $('#roles').val(data.data.role_id).trigger('change');

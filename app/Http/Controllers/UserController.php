@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\RoleUser;
+use App\Models\Profile;
 use App\Http\Requests;
 use Illuminate\Support\Facades\DB;
 use Response;
@@ -93,8 +94,9 @@ class UserController extends Controller
 
     public function edit(Request $request, $id)
     {
-        $data=User::select(\DB::raw('users.*,role_user.role_id'))
+        $data=User::select(\DB::raw('users.*,role_user.role_id,profile.nama_depan,profile.nama_belakang'))
         ->join('role_user','role_user.user_id','=','users.id')
+        ->leftjoin('profile','profile.id','=','users.id_profile')
         ->where('users.id',$id)->first();
 
         $this->menuAccess(\Auth::user(),'Manajemen Pengguna (Edit)');
@@ -106,10 +108,11 @@ class UserController extends Controller
         $all_data=$request->all();
 
         $validation = Validator::make($request->all(), [
-            'name'      => 'required',
-            'username'  => 'required',
-            'email'     => 'required',
-            'roles'     => 'required',
+            'nama_depan'    => 'required',
+            'nama_belakang' => 'required',
+            'username'      => 'required',
+            'email'         => 'required',
+            'roles'         => 'required',
         ]);
 
 
@@ -130,10 +133,35 @@ class UserController extends Controller
         DB::beginTransaction();
         try {
             $user=User::find($all_data['id']);
+            
+            if(!empty($user->id_profile))
+            {
+                $get=Profile::find($user->id_profile);
+
+                $data_profil  = array(
+                   'nama_depan'    => ucwords(strtolower($all_data['nama_depan'])),
+                   'nama_belakang' => ucwords(strtolower($all_data['nama_belakang'])),
+               );
+
+                $this->logUpdatedActivity(Auth::user(),$get->getAttributes(),$data_profil,'Manajemen Pengguna','profile');
+                $profil=$get->update($data_profil);
+            }
+            else
+            {
+                $data_profil  = array(
+                   'nama_depan'    => ucwords(strtolower($all_data['nama_depan'])),
+                   'nama_belakang' => ucwords(strtolower($all_data['nama_belakang'])),
+               );
+
+                $this->logCreatedActivity(Auth::user(),$data_profil,'Manajemen Pengguna','profile');
+                $profil=Profile::create($data_profil);
+            }
+
+
             if(!empty($all_data['password']))
             {
                 $dataUser  = array(
-                 'name'     =>$all_data['name'] ,
+                 'name'     =>ucwords(strtolower($all_data['nama_depan'])).' '.ucwords(strtolower($all_data['nama_belakang'])) ,
                  'username' =>$all_data['username'] ,
                  'email'    =>$all_data['email'] ,
                  'password' =>bcrypt($all_data['password']) ,
@@ -142,7 +170,7 @@ class UserController extends Controller
             else
             {
                 $dataUser  = array(
-                 'name'     =>$all_data['name'] ,
+                 'name'     =>ucwords(strtolower($all_data['nama_depan'])).' '.ucwords(strtolower($all_data['nama_belakang'])) ,
                  'username' =>$all_data['username'] ,
                  'email'    =>$all_data['email'] ,
                );
@@ -196,11 +224,12 @@ class UserController extends Controller
         $all_data=$request->all();
 
         $validation = Validator::make($request->all(), [
-            'name'      => 'required',
-            'username'  => 'required',
-            'email'     => 'required',
-            'roles'     => 'required',
-            'password'  => 'required',
+            'nama_depan'    => 'required',
+            'nama_belakang' => 'required',
+            'username'      => 'required',
+            'email'         => 'required',
+            'roles'         => 'required',
+            'password'      => 'required',
         ]);
 
 
@@ -221,11 +250,20 @@ class UserController extends Controller
         DB::beginTransaction();
         try {
 
+            $data_profil  = array(
+             'nama_depan'    => ucwords(strtolower($all_data['nama_depan'])),
+             'nama_belakang' => ucwords(strtolower($all_data['nama_belakang'])),
+           );
+
+            $this->logCreatedActivity(Auth::user(),$data_profil,'Manajemen Pengguna','profile');
+            $profil=Profile::create($data_profil);
+
              $data  = array(
-             'name'     =>$all_data['name'] ,
-             'username' =>$all_data['username'] ,
-             'email'    =>$all_data['email'] ,
-             'password' =>bcrypt($all_data['password']) ,
+             'name'         =>ucwords(strtolower($all_data['nama_depan'])).' '.ucwords(strtolower($all_data['nama_belakang'])) ,
+             'username'     =>$all_data['username'] ,
+             'email'        =>$all_data['email'] ,
+             'password'     =>bcrypt($all_data['password']) ,
+             'id_profile'   =>$profil->id ,
            );
 
              $this->logCreatedActivity(Auth::user(),$data,'Manajemen Pengguna','users');

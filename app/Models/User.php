@@ -16,17 +16,26 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $name
  * @property string $username
  * @property string $email
+ * @property bool|null $status_aktif
  * @property Carbon|null $email_verified_at
  * @property string $password
  * @property string|null $remember_token
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
+ * @property int|null $id_profile
+ * 
+ * @property Profile $profile
  *
  * @package App\Models
  */
 class User extends Model
 {
 	protected $table = 'users';
+
+	protected $casts = [
+		'status_aktif' => 'bool',
+		'id_profile' => 'int'
+	];
 
 	protected $dates = [
 		'email_verified_at'
@@ -41,11 +50,17 @@ class User extends Model
 		'name',
 		'username',
 		'email',
+		'status_aktif',
 		'email_verified_at',
 		'password',
 		'remember_token',
-		'status_aktif'
+		'id_profile'
 	];
+
+	public function profile()
+	{
+		return $this->belongsTo(Profile::class, 'id_profile');
+	}
 
 	public function roleUser(){
         return $this->hasOne('App\Models\RoleUser','user_id');

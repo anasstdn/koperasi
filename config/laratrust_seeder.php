@@ -20,6 +20,7 @@ return [
                     'kelurahan'             => 'r',
                     'status-perkawinan'     => 'r',
                     'agama'                 => 'r',
+                    'jenis-kelamin'         => 'r',
                 'master-kepegawaian-menu'   => 'r',
                     'departement'           => 'r',
                     'golongan'              => 'r',
@@ -46,6 +47,7 @@ return [
                     'kelurahan'             => 'r',
                     'status-perkawinan'     => 'r',
                     'agama'                 => 'r',
+                    'jenis-kelamin'         => 'r',
                 'master-kepegawaian-menu'   => 'r',
                     'departement'           => 'r',
                     'golongan'              => 'r',
@@ -60,6 +62,10 @@ return [
         //     'home-menu' => 'r'
         // ],
         'pimpinan' => [
+            'profile' => 'r,u',
+            'home-menu' => 'r'
+        ],
+        'hr' => [
             'profile' => 'r,u',
             'home-menu' => 'r'
         ],

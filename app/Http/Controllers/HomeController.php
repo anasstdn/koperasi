@@ -24,6 +24,14 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        if(cek_kelengkapan_data()['status']==true)
+        {
+            message(false,'',cek_kelengkapan_data()['pesan']);
+            return redirect('/profile/edit/'.\Auth::user()->id);
+        }
+        else
+        {
+            return view('home');
+        }
     }
 }
