@@ -172,7 +172,18 @@ Route::prefix('pegawai')->group(function() {
     Route::match(['get','post'],'/store','PegawaiController@store');
     Route::match(['get', 'post'],'/edit/{id}','PegawaiController@edit');
     Route::match(['get','post'],'/update/{id}','PegawaiController@update');
+    Route::match(['get','post'],'/update-status/{id}','PegawaiController@status');
     Route::match(['get', 'post'],'/{id}/nonaktifkan','PegawaiController@nonaktifkan');
     Route::match(['get', 'post'],'/{id}/aktifkan','PegawaiController@aktifkan');
     Route::get('/{id}/delete', 'PegawaiController@destroy');
+});
+
+Route::prefix('anggota')->group(function() {
+    Route::get('/', 'AnggotaController@index');
+    Route::get('/create', 'AnggotaController@create');
+    Route::match(['get', 'post'],'/get-data','AnggotaController@getData');
+    Route::match(['get','post'],'/store','AnggotaController@store');
+    Route::match(['get', 'post'],'/edit/{id}','AnggotaController@edit');
+    Route::match(['get','post'],'/update/{id}','AnggotaController@update');
+    Route::get('/{id}/delete', 'AnggotaController@destroy');
 });

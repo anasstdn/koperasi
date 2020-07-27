@@ -4,7 +4,7 @@
 	<div class="content content-full">
 		<div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center">
 			<h1 class="flex-sm-fill h3 my-2">
-				Pegawai
+				Anggota Koperasi
 			</h1>
 		</div>
 	</div>
@@ -13,7 +13,7 @@
 	<div class="block">
 		<div class="block-header">
 			<div class="col-md-1">
-				<a class="btn btn-primary btn-sm" id="tambah" href="{{url('pegawai/create')}}" >Tambah</a>
+				<a class="btn btn-primary btn-sm" id="tambah" href="{{url('anggota/create')}}" >Tambah</a>
 			</div>
 		</div>
 		<div class="block-content block-content-full">
@@ -25,11 +25,10 @@
 							<thead>
 								<tr>
 									<th class="text-center" style="width: 80px;">No</th>
-									<th>NIP</th>
 									<th>Nama Depan</th>
 									<th>Nama Belakang</th>
-									<th>Jabatan</th>
-									<th>Departement</th>
+									<th>Tanggal Bergabung</th>
+									<th>Flag Aktif</th>
 									{{-- <th>Status Pegawai</th> --}}
 									<th style="width: 15%;">Aksi</th>
 								</tr>
@@ -70,18 +69,17 @@
 			processing : true,
 			serverSide : true,
 			ajax : {
-				url:"{{ url('pegawai/get-data') }}",
+				url:"{{ url('anggota/get-data') }}",
 				data: function (d) {
 
 				}
 			},
 			columns: [
             {data: 'nomor', name: 'nomor'},
-            {data: 'nip', name: 'nip'},
             {data: 'nama_depan', name: 'nama_depan'},
             {data: 'nama_belakang', name: 'nama_belakang'},
-            {data: 'nama_jabatan', name: 'nama_jabatan'},
-            {data: 'nama_departement', name: 'nama_departement'},
+            {data: 'tgl_bergabung', name: 'tgl_bergabung'},
+            {data: 'flag_keaktifan', name: 'flag_keaktifan'},
             {data: 'action', name: 'action', orderable: false, searchable: false},
         ],
         language: {

@@ -35,6 +35,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property JenisKelamin $jenis_kelamin
  * @property Kelurahan $kelurahan
  * @property StatusPerkawinan $status_perkawinan
+ * @property Collection|Anggotum[] $anggota
  * @property Collection|Pegawai[] $pegawais
  * @property Collection|User[] $users
  *
@@ -91,6 +92,11 @@ class Profile extends Model
 	public function status_perkawinan()
 	{
 		return $this->belongsTo(StatusPerkawinan::class, 'id_status_perkawinan');
+	}
+
+	public function anggota()
+	{
+		return $this->hasMany(Anggotum::class, 'id_profile');
 	}
 
 	public function pegawais()

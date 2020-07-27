@@ -120,13 +120,37 @@ class PegawaiController extends Controller
   //   		}
   //   	})
 		->addColumn('action', function ($data) {
+            $get=Pegawai::where('id_profile',$data->id)->first();
 			$edit=url("pegawai/edit/".$data->id);
 			$delete=url("pegawai/".$data->id)."/delete";
+            if(isset($get))
+            {
+                if($get->flag_resign=='N')
+                {
+                    $aktif=url("pegawai/".$data->id)."/nonaktifkan";
+                }
+                else
+                {
+                    $aktif=url("pegawai/".$data->id)."/aktifkan";
+                }
+                
+            }
 
             $content = '';
     
             $content.="<a href='$edit' class='btn btn-primary btn-sm' data-original-title='Edit' title='Edit'><i class='fa fa-edit' aria-hidden='true'></i></a>";
             $content.="<a href='#' onclick='hapus(\"$delete\")' class='btn btn-danger btn-sm' data-original-title='Hapus' title='Hapus'><i class='fa fa-trash' aria-hidden='true'></i></a>";
+            if(isset($get))
+            {
+                if($get->flag_resign=='N')
+                {
+                    $content.="<a href='#' onclick='show_modal(\"$aktif\")' class='btn btn-warning btn-sm' data-original-title='Nonaktifkan' title='Hapus'><i class='fa fa-times' aria-hidden='true'></i></a>";
+                }
+                else
+                {
+                    $content.="<a href='#' onclick='show_modal(\"$aktif\")' class='btn btn-success btn-sm' data-original-title='Aktifkan' title='Hapus'><i class='fa fa-check' aria-hidden='true'></i></a>";
+                }
+            }
             
 			
 			return $content;
@@ -489,5 +513,77 @@ class PegawaiController extends Controller
         }
         $affected_row = $model::where($where,$id)->first();
         return $affected_row;
+    }
+
+    public function nonaktifkan(Request $request, $id)
+    {
+        $title='Form Resign';
+        $mode='nonaktifkan';
+        $this->menuAccess(\Auth::user(),'Pegawai (Nonaktifkan)');
+        return view('pegawai.popup',compact('title','mode','id'));
+    }
+
+    public function aktifkan(Request $request, $id)
+    {
+        $title='Form Aktivasi';
+        $mode='aktifkan';
+        $this->menuAccess(\Auth::user(),'Pegawai (Aktifkan)');
+        return view('pegawai.popup',compact('title','mode','id'));
+    }
+
+    public function status(Request $request, $id)
+    {
+        $all_data=$request->all();
+
+        $validation = Validator::make($request->all(), [
+            'tanggal'  => 'required',
+            'mode'     => 'required',
+        ]);
+
+
+        if (!$validation->passes()){
+            $count_err=count($validation->errors()->all());
+            $i=0;
+            foreach($validation->errors()->all() as $val)
+            {
+                message(false,'',$val);
+                $i++;
+            }
+            if($count_err==$i)
+            {
+                return redirect('/pegawai');
+            }
+        }
+
+        DB::beginTransaction();
+        try {
+
+            if($all_data['mode']=='nonaktifkan')
+            {
+                $data=array(
+                    'tgl_resign'    =>  date('Y-m-d',strtotime($all_data['tanggal'])),
+                    'flag_resign'   =>  'Y',
+                );
+            }
+            else
+            {
+                $data=array(
+                    'tgl_resign'    =>  null,
+                    'flag_resign'   =>  'N',
+                    'tgl_bergabung' =>  date('Y-m-d',strtotime($all_data['tanggal'])),
+                );
+            }
+
+            $act=$this->createOrUpdate($data,'\App\Models\Pegawai','id_profile',$id,'Pegawai');
+
+            message($act,'Data berhasil disimpan!','Data gagal disimpan!');
+
+        }catch (Exception $e) {
+            echo 'Message' .$e->getMessage();
+            DB::rollback();
+        }
+        DB::commit();
+
+        return redirect('/pegawai');
     }
 }

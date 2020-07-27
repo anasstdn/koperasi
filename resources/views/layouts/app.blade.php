@@ -347,6 +347,17 @@
       }
   }
 
+  function show_modal(url) { 
+  $.ajax({
+    url:url,
+    dataType: 'text',
+    success: function(data) {
+      $("#formModal").html(data);
+      $("#formModal").modal('show');
+      }
+    });
+};
+
   var tday=["Minggu","Senin","Selasa","Rabu","Kamis","Jumat","Sabtu"];
   var tmonth=["Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember"];
 
