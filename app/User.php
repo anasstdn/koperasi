@@ -43,4 +43,8 @@ class User extends Authenticatable
     {
         return $this->belongsTo('\App\Models\Profile','id_profile');
     }
+
+    public function roleUser(){
+        return $this->hasOne('App\Models\RoleUser','user_id');
+    }
 }

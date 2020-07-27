@@ -22,6 +22,7 @@ class MenuSeeder extends Seeder
     	$this->menuAcl();
         $this->menuActivity();
         $this->menuMaster();
+        $this->menuPegawai();
     }
 
     private function menuHome()
@@ -77,40 +78,40 @@ class MenuSeeder extends Seeder
     );
     	$submenu->save();
 
-    	$permission = Permission::firstOrNew(array(
-    		'name'=>'read-permission',
-    	));
-    	$permission->display_name = 'Read Permissions';
-    	$permission->save();
+    // 	$permission = Permission::firstOrNew(array(
+    // 		'name'=>'read-permission',
+    // 	));
+    // 	$permission->display_name = 'Read Permissions';
+    // 	$permission->save();
 
-    	$submenu = Menu::firstOrNew(array(
-    		'name'=>'Manajemen Permissions',
-    		'parent_id'=>$menu->id,
-    		'permission_id'=>$permission->id,
-    		'ordinal'=>2,
-    		'parent_status'=>'N',
-    		'url'=>'permission',
-    	)
-    );
-    	$submenu->save();
+    // 	$submenu = Menu::firstOrNew(array(
+    // 		'name'=>'Manajemen Permissions',
+    // 		'parent_id'=>$menu->id,
+    // 		'permission_id'=>$permission->id,
+    // 		'ordinal'=>2,
+    // 		'parent_status'=>'N',
+    // 		'url'=>'permission',
+    // 	)
+    // );
+    // 	$submenu->save();
 
 
-    	$permission = Permission::firstOrNew(array(
-    		'name' => 'read-role',
-    	));
-    	$permission->display_name = 'Read Roles';
-    	$permission->save();
+    // 	$permission = Permission::firstOrNew(array(
+    // 		'name' => 'read-role',
+    // 	));
+    // 	$permission->display_name = 'Read Roles';
+    // 	$permission->save();
 
-    	$submenu = Menu::firstOrNew(array(
-    		'name' => 'Manajemen Roles',
-    		'parent_id' => $menu->id,
-    		'permission_id' => $permission->id,
-    		'ordinal' => 2,
-    		'parent_status' => 'N',
-    		'url' => 'role',
-    	)
-    );
-    	$submenu->save();
+    // 	$submenu = Menu::firstOrNew(array(
+    // 		'name' => 'Manajemen Roles',
+    // 		'parent_id' => $menu->id,
+    // 		'permission_id' => $permission->id,
+    // 		'ordinal' => 2,
+    // 		'parent_status' => 'N',
+    // 		'url' => 'role',
+    // 	)
+    // );
+    // 	$submenu->save();
     }
 
     private function menuActivity()
@@ -403,5 +404,24 @@ class MenuSeeder extends Seeder
     );
         $subsubmenu->save();
 
+    }
+
+     private function menuPegawai()
+    {
+        $this->command->info('Menu Pegawai Seeder');
+        $permission = Permission::firstOrNew(array(
+            'name'=>'read-pegawai'
+        ));
+        $permission->display_name = 'Read Pegawai';
+        $permission->save();
+        $menu = Menu::firstOrNew(array(
+            'name'=>'Kepegawaian',
+            'permission_id'=>$permission->id,
+            'ordinal'=>1,
+            'parent_status'=>'N',
+            'url'=>'pegawai',
+        ));
+        $menu->icon = 'si-user';
+        $menu->save();
     }
 }

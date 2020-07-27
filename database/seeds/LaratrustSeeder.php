@@ -54,14 +54,95 @@ class LaratrustSeeder extends Seeder
             $this->command->info("Creating '{$key}' user");
 
             // Create default user for each role
-            $user = \App\User::create([
-                'name' => ucwords(str_replace('_', ' ', $key)),
-                'username'=>$key,
-                'email' => $key.'@app.com',
-                'password' => bcrypt('password')
+            // $user = \App\User::create([
+            //     'name' => ucwords(str_replace('_', ' ', $key)),
+            //     'username'=>$key,
+            //     'email' => $key.'@app.com',
+            //     'password' => bcrypt('password')
+            // ]);
+
+            // $user->attachRole($role);
+
+
+            $check_id_profile=\App\User::where('name','like','%'.ucwords(str_replace('_', ' ', $key)).'%')->first();
+            if(isset($check_id_profile) && !empty($check_id_profile))
+            {
+                if($check_id_profile->id_profile!==null)
+                {
+                    $profile_id=$check_id_profile->id_profile;
+                }
+                else
+                {
+                    $checkProfile=\App\Models\Pegawai::find($check_id_profile->id_profile);
+
+                    if(isset($checkProfile) && !empty($checkProfile))
+                    {
+                    //     $data=array(
+                    //         'nama_lengkap'=>ucwords(str_replace('_', ' ', $key)),
+                    // // 'nip'=>getNoNIP1(),
+                    //     );
+
+                    //     $checkPegawai->update($data);
+
+                        $profile_id=$checkProfile->id;
+                    }
+                    else
+                    {
+                        $profile = \App\Models\Profile::firstOrNew([
+                            'nama_depan'=>ucwords(str_replace('_', ' ', $key)),
+                        ]);
+
+                        $profile->save();
+
+                        $profile_id=$profile->id;
+                    }
+                }
+            }
+            else
+            {
+                $checkProfile=\App\Models\Profile::where('nama_depan','like','%'.ucwords(str_replace('_', ' ', $key)).'%')->first();
+
+                if(isset($checkProfile) && !empty($checkProfile))
+                {
+                    $data=array(
+                        'nama_depan'=>ucwords(str_replace('_', ' ', $key)),
+                    // 'nip'=>getNoNIP1(),
+                    );
+
+                    $checkProfile->update($data);
+
+                    $profile_id=$checkProfile->id;
+                }
+                else
+                {
+                    $profile = \App\Models\Profile::firstOrNew([
+                        'nama_depan'=>ucwords(str_replace('_', ' ', $key)),
+                    ]);
+
+                    $profile->save();
+
+                    $profile_id=$profile->id;
+                }
+            }
+
+
+            $user = \App\User::firstOrNew([
+                'username' => $key,
             ]);
 
-            $user->attachRole($role);
+            $user->name = ucwords(str_replace('_', ' ', $key));
+            $user->email = $key.'@nubeskop.id';
+            $user->password = bcrypt('password');
+            $user->status_aktif=true;
+            $user->id_profile=$profile_id;
+            $user->save();
+            // $user->attachRole($role);
+            App\Models\RoleUser::firstOrNew([
+              'user_id'=>$user->id,
+              'role_id'=>$role->id,
+              'user_type'=>'App\User',
+            ])->save();
+        
         }
 
         // Creating user with permissions
@@ -118,6 +199,7 @@ class LaratrustSeeder extends Seeder
         DB::table('permission_role')->truncate();
         DB::table('permission_user')->truncate();
         DB::table('role_user')->truncate();
+        \App\Models\Profile::truncate();
         \App\User::truncate();
         \App\Role::truncate();
         \App\Permission::truncate();

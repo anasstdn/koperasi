@@ -63,18 +63,17 @@ class UserController extends Controller
     		{
                 if($data->status_aktif==1)
                 {
-                    return array('url'=>url("user/".$data->id)."/nonaktifkan",'status_aktif'=>$data->status_aktif);
+                    return array('url1'=>url("user/".$data->id)."/nonaktifkan",'status_aktif'=>$data->status_aktif);
                 }
                 else
                 {
-                    return array('url'=>url("user/".$data->id)."/aktifkan",'status_aktif'=>$data->status_aktif);
+                    return array('url1'=>url("user/".$data->id)."/aktifkan",'status_aktif'=>$data->status_aktif);
                 }
     			
     		}else
     		{
     			return null;
     		}
-
     	})
     	->addColumn('action', function ($data) use ($config) {
     		$edit=$data->id;
@@ -145,6 +144,7 @@ class UserController extends Controller
 
                 $this->logUpdatedActivity(Auth::user(),$get->getAttributes(),$data_profil,'Manajemen Pengguna','profile');
                 $profil=$get->update($data_profil);
+                $id_profil=$get->id;
             }
             else
             {
@@ -155,24 +155,27 @@ class UserController extends Controller
 
                 $this->logCreatedActivity(Auth::user(),$data_profil,'Manajemen Pengguna','profile');
                 $profil=Profile::create($data_profil);
+                $id_profil=$profil->id;
             }
 
 
             if(!empty($all_data['password']))
             {
                 $dataUser  = array(
-                 'name'     =>ucwords(strtolower($all_data['nama_depan'])).' '.ucwords(strtolower($all_data['nama_belakang'])) ,
-                 'username' =>$all_data['username'] ,
-                 'email'    =>$all_data['email'] ,
-                 'password' =>bcrypt($all_data['password']) ,
+                 'name'         =>ucwords(strtolower($all_data['nama_depan'])).' '.ucwords(strtolower($all_data['nama_belakang'])) ,
+                 'username'     =>$all_data['username'] ,
+                 'email'        =>$all_data['email'] ,
+                 'password'      =>bcrypt($all_data['password']) ,
+                 'id_profile'   =>$id_profil ,
                );
             }
             else
             {
                 $dataUser  = array(
-                 'name'     =>ucwords(strtolower($all_data['nama_depan'])).' '.ucwords(strtolower($all_data['nama_belakang'])) ,
-                 'username' =>$all_data['username'] ,
-                 'email'    =>$all_data['email'] ,
+                 'name'         =>ucwords(strtolower($all_data['nama_depan'])).' '.ucwords(strtolower($all_data['nama_belakang'])) ,
+                 'username'     =>$all_data['username'] ,
+                 'email'        =>$all_data['email'] ,
+                 'id_profile'   =>$id_profil ,
                );
             }
             $this->logUpdatedActivity(Auth::user(),$user->getAttributes(),$dataUser,'Manajemen Pengguna','users');

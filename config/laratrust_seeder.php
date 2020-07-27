@@ -28,6 +28,7 @@ return [
                 'master-kas-menu'           => 'r',
                     'kategori-transaksi'    => 'r',
                     'jenis-transaksi'       => 'r',
+            'pegawai'                       => 'r',
         ],
         'superadministrator' => [
             'users'                         => 'c,r,u,d',
@@ -55,21 +56,22 @@ return [
                 'master-kas-menu'           => 'r',
                     'kategori-transaksi'    => 'r',
                     'jenis-transaksi'       => 'r',
+            'pegawai'                       => 'r',
         ],
         // 'administrator' => [
         //     'users' => 'c,r,u,d',
         //     'profile' => 'r,u',
         //     'home-menu' => 'r'
         // ],
-        'pimpinan' => [
+        'pengurus' => [
             'profile' => 'r,u',
             'home-menu' => 'r'
         ],
-        'hr' => [
+        'pengawas' => [
             'profile' => 'r,u',
             'home-menu' => 'r'
         ],
-        'staff' => [
+        'pengelola' => [
             'profile' => 'r,u',
             'home-menu' => 'r'
         ],

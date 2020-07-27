@@ -164,3 +164,15 @@ Route::prefix('profile')->group(function() {
     Route::match(['get','post'],'/update','ProfileController@update');
     Route::get('/{id}/delete', 'ProfileController@destroy');
 });
+
+Route::prefix('pegawai')->group(function() {
+    Route::get('/', 'PegawaiController@index');
+    Route::get('/create', 'PegawaiController@create');
+    Route::match(['get', 'post'],'/get-data','PegawaiController@getData');
+    Route::match(['get','post'],'/store','PegawaiController@store');
+    Route::match(['get', 'post'],'/edit/{id}','PegawaiController@edit');
+    Route::match(['get','post'],'/update/{id}','PegawaiController@update');
+    Route::match(['get', 'post'],'/{id}/nonaktifkan','PegawaiController@nonaktifkan');
+    Route::match(['get', 'post'],'/{id}/aktifkan','PegawaiController@aktifkan');
+    Route::get('/{id}/delete', 'PegawaiController@destroy');
+});

@@ -49,7 +49,7 @@
 
                     <!-- Right Section -->
                     <div class="d-flex align-items-center">
-                        <span id="clockbox" class="font-w600 font-size-md text-white-op d-flex"></span>
+                        <span id="clockbox" class="font-w400 font-size-md text-white-op d-flex"></span>
                         <!-- User Dropdown -->
                         <div class="dropdown d-inline-block ml-2">
                             <button type="button" class="btn btn-sm btn-dual" id="page-header-user-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -100,7 +100,7 @@
                         <!-- END User Dropdown -->
 
                         <!-- Notifications Dropdown -->
-                        <div class="dropdown d-inline-block ml-2">
+ {{--                        <div class="dropdown d-inline-block ml-2">
                             <button type="button" class="btn btn-sm btn-dual" id="page-header-notifications-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="si si-bell"></i>
                                 <span class="badge badge-primary badge-pill">6</span>
@@ -183,14 +183,14 @@
                                     </a>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
                         <!-- END Notifications Dropdown -->
 
                         <!-- Toggle Side Overlay -->
                         <!-- Layout API, functionality initialized in Template._uiApiLayout() -->
-                        <button type="button" class="btn btn-sm btn-dual ml-2" data-toggle="layout" data-action="side_overlay_toggle">
+                     {{--    <button type="button" class="btn btn-sm btn-dual ml-2" data-toggle="layout" data-action="side_overlay_toggle">
                             <i class="fa fa-fw fa-list-ul fa-flip-horizontal"></i>
-                        </button>
+                        </button> --}}
                         <!-- END Toggle Side Overlay -->
                     </div>
                     <!-- END Right Section -->

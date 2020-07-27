@@ -5,25 +5,36 @@
 	<div class="content content-full">
 		<div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center">
 			<h1 class="flex-sm-fill h3 my-2">
-				Edit Profil
+				Form Pegawai
 			</h1>
 		</div>
 	</div>
 </div>
+@php
+if($mode=='create')
+{
+    $url=url('pegawai/store');
+}
+else
+{
+    $url=action('PegawaiController@update', $id);
+}
+@endphp
+
 <div class="content">
 	<div class="block">
+        <form action="{{$url}}" id="form" class="js-validation" method="POST" enctype="multipart/form-data">
+            {{ csrf_field() }}
 		<div class="block-header">
 			<h3 class="block-title">
                 <i class="fa fa-user-circle mr-5 text-muted"></i> Informasi Pribadi
             </h3>
         </div>
         <div class="block-content block-content-full">
-          <form action="{{url('profile/store')}}" id="form" class="js-validation" method="POST" enctype="multipart/form-data">
-            {{ csrf_field() }}
             <div class="row items-push">
               <div class="col-lg-3">
                 <p style="color: red">
-                  Silahkan isi informasi pribadi anda secara lengkap, tanda * wajib diisi.
+                  Silahkan isi informasi pegawai, tanda * wajib diisi.
               </p>
           </div>
           <div class="col-lg-7 offset-lg-1">
@@ -45,7 +56,7 @@
     </div>
     <div class="form-group row">
         <div class="col-6">
-            <label for="profile-settings-name">Jenis Kelamin&nbsp<span style="color: red">*</span></label>
+            <label for="profile-settings-name">Jenis Kelamin</label>
             <select class="js-select2 form-control form-control-lg" name="id_jenis_kelamin" id="id_jenis_kelamin" style="width: 100%;" data-placeholder="Pilih Jenis Kelamin">
                 <option value="">-Silahkan Pilih-</option>
                 <?php 
@@ -59,7 +70,7 @@
             </select>
         </div>
           <div class="col-6">
-            <label for="profile-settings-name">Agama&nbsp<span style="color: red">*</span></label>
+            <label for="profile-settings-name">Agama</label>
             <select class="js-select2 form-control form-control-lg" name="id_agama" id="id_agama" style="width: 100%;" data-placeholder="Pilih Agama">
                 <option value="">-Silahkan Pilih-</option>
                 <?php 
@@ -75,17 +86,17 @@
     </div>
     <div class="form-group row">
       <div class="col-6">
-        <label for="profile-settings-email">Tempat Lahir&nbsp<span style="color: red">*</span></label>
+        <label for="profile-settings-email">Tempat Lahir</label>
         <input type="text" class="form-control form-control-lg" id="tempat_lahir" name="tempat_lahir" placeholder="Tempat Lahir" value="{{isset($profile)?isset($profile->tempat_lahir)?$profile->tempat_lahir:'':''}}">
     </div>
     <div class="col-6">
-        <label for="profile-settings-email">Tanggal Lahir&nbsp<span style="color: red">*</span></label>
-        <input type="text" class="js-flatpickr form-control form-control-lg bg-white" data-date-format="d-m-Y" id="tgl_lahir" name="tgl_lahir" placeholder="Tanggal Lahir" value="{{isset($profile)?isset($profile->tgl_lahir)?date('d-m-Y',strtotime($profile->tgl_lahir)):'':''}}">
+        <label for="profile-settings-email">Tanggal Lahir</label>
+        <input type="text" class="js-flatpickr form-control form-control-lg bg-white" data-date-format="d-m-Y" id="tgl_lahir" name="tgl_lahir" placeholder="Tanggal Lahir" value="{{isset($profile)?isset($profile->tgl_lahir) && !empty($profile->tgl_lahir)?date('d-m-Y',strtotime($profile->tgl_lahir)):'':''}}">
     </div>
 </div>
 <div class="form-group row">
   <div class="col-6">
-    <label for="profile-settings-email">Status Perkawinan&nbsp<span style="color: red">*</span></label>
+    <label for="profile-settings-email">Status Perkawinan</label>
     <select class="js-select2 form-control form-control-lg" name="id_status_perkawinan" id="id_status_perkawinan" style="width: 100%;" data-placeholder="Pilih Status Perkawinan">
         <option value="">-Silahkan Pilih-</option>
         <?php 
@@ -101,11 +112,11 @@
 </div>
 <div class="form-group row">
   <div class="col-6">
-    <label for="profile-settings-email">Alamat KTP&nbsp<span style="color: red">*</span></label>
+    <label for="profile-settings-email">Alamat KTP</label>
     <textarea class="form-control form-control-lg" name="alamat_ktp" id="alamat_ktp" rows="5" placeholder="Alamat KTP">{{isset($profile)?isset($profile->alamat_ktp)?$profile->alamat_ktp:'':''}}</textarea>
 </div>
 <div class="col-6">
-    <label for="profile-settings-email">Wilayah KTP&nbsp<span style="color: red">*</span></label>
+    <label for="profile-settings-email">Wilayah KTP</label>
     <select class="js-select2 form-control form-control-lg" name="id_kelurahan_ktp" id="id_kelurahan_ktp" style="width: 100%;" data-placeholder="Pilih Wilayah KTP">
         <option value="">-Silahkan Pilih-</option>
         <?php 
@@ -121,11 +132,11 @@
 </div>
 <div class="form-group row">
   <div class="col-6">
-    <label for="profile-settings-email">Alamat Domisili&nbsp<span style="color: red">*</span></label>
+    <label for="profile-settings-email">Alamat Domisili</label>
     <textarea class="form-control form-control-lg" name="alamat_domisili" id="alamat_domisili" rows="5" placeholder="Alamat Domisili">{{isset($profile)?isset($profile->alamat_domisili)?$profile->alamat_domisili:'':''}}</textarea>
 </div>
 <div class="col-6">
-    <label for="profile-settings-email">Wilayah Domisili&nbsp<span style="color: red">*</span></label>
+    <label for="profile-settings-email">Wilayah Domisili</label>
     <select class="js-select2 form-control form-control-lg" name="id_kelurahan_domisili" id="id_kelurahan_domisili" style="width: 100%;" data-placeholder="Pilih Wilayah Domisili">
         <option value="">-Silahkan Pilih-</option>
         <?php 
@@ -141,7 +152,7 @@
 </div>
 <div class="form-group row">
   <div class="col-6">
-    <label for="profile-settings-email">No Telepon&nbsp<span style="color: red">*</span></label>
+    <label for="profile-settings-email">No Telepon</label>
     <input type="text" class="form-control form-control-lg" id="no_telp" name="no_telp" placeholder="Nomor Telepon" value="{{isset($profile)?isset($profile->no_telp)?$profile->no_telp:'':''}}">
 </div>
 </div>
@@ -161,6 +172,97 @@
 </div>
 </div>
 <input type="hidden" name="nama_foto" id="nama_foto" value="{{isset($profile)?isset($profile->foto)?$profile->foto:'':''}}">
+{{-- <div class="form-group row">
+  <div class="col-12">
+    <button type="submit" id="simpan" class="btn btn-primary">Simpan</button>
+</div>
+</div> --}}
+</div>
+</div>
+</div>
+<div class="block-header">
+    <h3 class="block-title">
+        <i class="fa fa-briefcase mr-5 text-muted"></i> Informasi Kepegawaian
+    </h3>
+</div>
+     <div class="block-content block-content-full">
+            <div class="row items-push">
+              <div class="col-lg-3">
+                <p style="color: red">
+                  Silahkan isi informasi kepegawaian secara lengkap.
+              </p>
+          </div>
+          <div class="col-lg-7 offset-lg-1">
+            <div class="form-group row">
+              <div class="col-6">
+                <label for="profile-settings-username">NIP&nbsp<span style="color: red">*</span></label>
+                <input type="text" class="form-control form-control-lg" id="nip" name="nip" placeholder="Nomor NIP" value="{{isset($profile)?isset($profile->nip)?$profile->nip:'':''}}">
+            </div>
+            <div class="col-6">
+                <label for="profile-settings-email">Tanggal Bergabung&nbsp<span style="color: red">*</span></label>
+                <input type="text" class="js-flatpickr form-control form-control-lg bg-white" data-date-format="d-m-Y" id="tgl_bergabung" name="tgl_bergabung" placeholder="Tanggal Bergabung" value="{{isset($profile)?isset($profile->tgl_bergabung)?date('d-m-Y',strtotime($profile->tgl_bergabung)):'':''}}">
+            </div>
+        </div>
+    <div class="form-group row">
+        <div class="col-6">
+            <label for="profile-settings-name">Jabatan&nbsp<span style="color: red">*</span></label>
+            <select class="js-select2 form-control form-control-lg" name="id_jabatan" id="id_jabatan" style="width: 100%;" data-placeholder="Pilih Jabatan">
+                <option value="">-Silahkan Pilih-</option>
+                <?php 
+                $jabatan=\App\Models\Jabatan::get();
+                ?>
+                @if(isset($jabatan) && !$jabatan->isEmpty())
+                @foreach($jabatan as $a)
+                <option value="{{$a->id}}" {{isset($profile->id_jabatan) && !empty($profile->id_jabatan)?$profile->id_jabatan==$a->id?'selected':'':''}}>{{$a->nama_jabatan}}</option>
+                @endforeach
+                @endif
+            </select>
+        </div>
+          <div class="col-6">
+            <label for="profile-settings-name">Departement&nbsp<span style="color: red">*</span></label>
+            <select class="js-select2 form-control form-control-lg" name="id_departement" id="id_departement" style="width: 100%;" data-placeholder="Pilih Departement">
+                <option value="">-Silahkan Pilih-</option>
+                <?php 
+                $departement=\App\Models\Departement::get();
+                ?>
+                @if(isset($departement) && !$departement->isEmpty())
+                @foreach($departement as $a)
+                <option value="{{$a->id}}" {{isset($profile->id_departement) && !empty($profile->id_departement)?$profile->id_departement==$a->id?'selected':'':''}}>{{$a->nama_departement}}</option>
+                @endforeach
+                @endif
+            </select>
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-6">
+            <label for="profile-settings-email">Golongan</label>
+            <select class="js-select2 form-control form-control-lg" name="id_golongan" id="id_golongan" style="width: 100%;" data-placeholder="Pilih Golongan">
+                <option value="">-Silahkan Pilih-</option>
+                <?php 
+                $golongan=\App\Models\Golongan::get();
+                ?>
+                @if(isset($golongan) && !$golongan->isEmpty())
+                @foreach($golongan as $a)
+                <option value="{{$a->id}}" {{isset($profile->id_golongan) && !empty($profile->id_golongan)?$profile->id_golongan==$a->id?'selected':'':''}}>{{$a->nama_golongan}}</option>
+                @endforeach
+                @endif
+            </select>
+        </div>
+         <div class="col-6">
+            <label for="profile-settings-email">Roles&nbsp<span style="color: red">*</span></label>
+            <select class="js-select2 form-control form-control-lg" name="roles" id="roles" style="width: 100%;" data-placeholder="Pilih Roles">
+                <option value="">-Silahkan Pilih-</option>
+                <?php 
+                $roles=\App\Role::whereNotIn('id',getConfigValues('ROLE_ADMIN'))->get();
+                ?>
+                @if(isset($roles) && !$roles->isEmpty())
+                @foreach($roles as $a)
+                <option value="{{$a->id}}" {{isset($profile->role_id) && !empty($profile->role_id)?$profile->role_id==$a->id?'selected':'':''}}>{{$a->display_name}}</option>
+                @endforeach
+                @endif
+            </select>
+        </div>
+</div>
 <div class="form-group row">
   <div class="col-12">
     <button type="submit" id="simpan" class="btn btn-primary">Simpan</button>
@@ -168,8 +270,8 @@
 </div>
 </div>
 </div>
-</form>
 </div>
+</form>
 </div>
 </div>
 @endsection
@@ -229,39 +331,59 @@
                     minlength: 1
                 },
                 'id_jenis_kelamin': {
-                    required: true,
+                    required: false,
                 },
                 'id_agama': {
-                    required: true,
+                    required: false,
                 },
                 'tempat_lahir': {
-                    required: true,
+                    required: false,
                     minlength: 1
                 },
                 'tgl_lahir': {
-                    required: true,
+                    required: false,
                     validDate:true,
                 },
                 'id_status_perkawinan': {
-                    required: true,
+                    required: false,
                 },
                 'alamat_ktp': {
-                    required: true,
+                    required: false,
                     minlength: 1
                 },
                 'alamat_domisili': {
-                    required: true,
+                    required: false,
                     minlength: 1
                 },
                 'id_kelurahan_ktp': {
-                    required: true,
+                    required: false,
                 },
                 'id_kelurahan_domisili': {
-                    required: true,
+                    required: false,
                 },
                 'no_telp': {
+                    required: false,
+                    minlength: 1
+                },
+                'nip': {
                     required: true,
                     minlength: 1
+                },
+                'tgl_bergabung': {
+                    required: true,
+                    validDate:true,
+                },
+                'id_jabatan': {
+                    required: true,
+                },
+                'id_departement': {
+                    required: true,
+                },
+                'id_golongan': {
+                    required: false,
+                },
+                'roles': {
+                    required: true,
                 },
             },
             messages: {
@@ -312,6 +434,25 @@
                 'no_telp': {
                     required: 'Silahkan isi form',
                     minlength: 'Karakter minimal diisi 1'
+                },
+                'nip': {
+                    required: 'Silahkan isi form',
+                    minlength: 'Karakter minimal diisi 1'
+                },
+                'tgl_bergabung': {
+                    required: 'Silahkan isi form',
+                },
+                'id_jabatan': {
+                    required: 'Silahkan isi form',
+                },
+                'id_departement': {
+                    required: 'Silahkan isi form',
+                },
+                'id_golongan': {
+                    required: 'Silahkan isi form',
+                },
+                'roles': {
+                    required: 'Silahkan isi form',
                 },
             }
         });

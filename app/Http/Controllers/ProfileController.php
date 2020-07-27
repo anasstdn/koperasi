@@ -21,7 +21,7 @@ class ProfileController extends Controller
 	public function __construct()
 	{
 		$this->middleware('auth');
-		// $this->middleware('permission:read-profile');
+		$this->middleware('permission:read-profile');
 	}
 
 	public function index()
@@ -114,13 +114,12 @@ class ProfileController extends Controller
         		'alamat_domisili' 		=> $all_data['alamat_domisili'] ,
         		'id_kelurahan_domisili' => $all_data['id_kelurahan_domisili'] ,
         		'no_telp' 				=> $all_data['no_telp'] ,
-        		'foto'        			=>    $flag,
+        		'foto'        			=> $flag,
         	);
 
         	if(isset($dataProfile))
         	{
         		$this->logUpdatedActivity(Auth::user(),$dataProfile->getAttributes(),$dataUser,'Profile','profile');
-         // dd($dataUser);
         		$insert=$dataProfile->update($dataUser);
         		$id_profile=$dataProfile->id;
         	}

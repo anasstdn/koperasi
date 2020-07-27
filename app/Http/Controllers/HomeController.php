@@ -24,14 +24,22 @@ class HomeController extends Controller
      */
     public function index()
     {
-        if(cek_kelengkapan_data()['status']==true)
+        if(!in_array(\Auth::user()->roleUser->role_id, getConfigValues('ROLE_ADMIN')))
         {
-            message(false,'',cek_kelengkapan_data()['pesan']);
-            return redirect('/profile/edit/'.\Auth::user()->id);
+            if(cek_kelengkapan_data()['status']==true)
+            {
+                message(false,'',cek_kelengkapan_data()['pesan']);
+                return redirect('/profile/edit/'.\Auth::user()->id);
+            }
+            else
+            {
+                return view('home');
+            }
         }
         else
         {
             return view('home');
         }
+        
     }
 }
