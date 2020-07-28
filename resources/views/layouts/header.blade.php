@@ -76,7 +76,7 @@
                                             <i class="si si-user ml-1"></i>
                                         </span>
                                     </a>
-                                    <a class="dropdown-item d-flex align-items-center justify-content-between" href="javascript:void(0)">
+                                    <a class="dropdown-item d-flex align-items-center justify-content-between" href="{{url('/pengaturan')}}">
                                         <span>Pengaturan</span>
                                         <i class="si si-settings"></i>
                                     </a>

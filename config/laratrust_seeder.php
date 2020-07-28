@@ -29,6 +29,7 @@ return [
                     'kategori-transaksi'    => 'r',
                     'jenis-transaksi'       => 'r',
             'pegawai'                       => 'r',
+            'anggota'                       => 'r',
         ],
         'superadministrator' => [
             'users'                         => 'c,r,u,d',
@@ -57,6 +58,7 @@ return [
                     'kategori-transaksi'    => 'r',
                     'jenis-transaksi'       => 'r',
             'pegawai'                       => 'r',
+            'anggota'                       => 'r',
         ],
         // 'administrator' => [
         //     'users' => 'c,r,u,d',
@@ -65,15 +67,33 @@ return [
         // ],
         'pengurus' => [
             'profile' => 'r,u',
-            'home-menu' => 'r'
+            // 'home-menu' => 'r'
         ],
         'pengawas' => [
             'profile' => 'r,u',
-            'home-menu' => 'r'
+            // 'home-menu' => 'r'
         ],
         'pengelola' => [
             'profile' => 'r,u',
-            'home-menu' => 'r'
+            // 'home-menu' => 'r'
+            'master-menu'                   => 'r',
+                'master-umum-menu'          => 'r',
+                    'provinsi'              => 'r',
+                    'kabupaten'             => 'r',
+                    'kecamatan'             => 'r',
+                    'kelurahan'             => 'r',
+                    'status-perkawinan'     => 'r',
+                    'agama'                 => 'r',
+                    'jenis-kelamin'         => 'r',
+                'master-kepegawaian-menu'   => 'r',
+                    'departement'           => 'r',
+                    'golongan'              => 'r',
+                    'jabatan'               => 'r',
+                'master-kas-menu'           => 'r',
+                    'kategori-transaksi'    => 'r',
+                    'jenis-transaksi'       => 'r',
+            'pegawai'                       => 'r',
+            'anggota'                       => 'r',
         ],
     ],
     'permission_structure' => [

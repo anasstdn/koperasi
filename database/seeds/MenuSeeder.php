@@ -23,6 +23,7 @@ class MenuSeeder extends Seeder
         $this->menuActivity();
         $this->menuMaster();
         $this->menuPegawai();
+        $this->menuAnggota();
     }
 
     private function menuHome()
@@ -422,6 +423,25 @@ class MenuSeeder extends Seeder
             'url'=>'pegawai',
         ));
         $menu->icon = 'si-user';
+        $menu->save();
+    }
+
+    private function menuAnggota()
+    {
+        $this->command->info('Menu Anggota Seeder');
+        $permission = Permission::firstOrNew(array(
+            'name'=>'read-anggota'
+        ));
+        $permission->display_name = 'Read Anggota';
+        $permission->save();
+        $menu = Menu::firstOrNew(array(
+            'name'=>'Anggota Koperasi',
+            'permission_id'=>$permission->id,
+            'ordinal'=>1,
+            'parent_status'=>'N',
+            'url'=>'anggota',
+        ));
+        $menu->icon = 'si-users';
         $menu->save();
     }
 }

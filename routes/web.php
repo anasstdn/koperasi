@@ -187,3 +187,13 @@ Route::prefix('anggota')->group(function() {
     Route::match(['get','post'],'/update/{id}','AnggotaController@update');
     Route::get('/{id}/delete', 'AnggotaController@destroy');
 });
+
+Route::prefix('pengaturan')->group(function() {
+    Route::get('/', 'PengaturanController@index');
+    Route::get('/create', 'PengaturanController@create');
+    Route::match(['get', 'post'],'/get-data','PengaturanController@getData');
+    Route::match(['get','post'],'/store','PengaturanController@store');
+    Route::match(['get', 'post'],'/{id}/edit','PengaturanController@edit');
+    Route::match(['get','post'],'/update/{id}','PengaturanController@update');
+    Route::get('/{id}/delete', 'PengaturanController@destroy');
+});
