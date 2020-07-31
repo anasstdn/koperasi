@@ -25,6 +25,9 @@
 						<li class="nav-item">
 							<a class="nav-link" href="#perusahaan">Perusahaan</a>
 						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="#user_settings">Pengguna</a>
+						</li>
 						@endif
 					</ul>
 					<div class="block-content tab-content overflow-hidden">
@@ -34,6 +37,9 @@
 						</div>
 						<div class="tab-pane fade fade-left" id="perusahaan" role="tabpanel">
 							@include('pengaturan.perusahaan')
+						</div>
+						<div class="tab-pane fade fade-left" id="user_settings" role="tabpanel">
+							@include('pengaturan.user-settings')
 						</div>
 						@endif
 						<div class="form-group row">
@@ -84,6 +90,7 @@ else
 		{
 			$('#mode').val('user_settings');
 			$('#simpan').fadeIn();
+			user_settings();
 		}
 
 		 $('.nav-tabs-block li a.nav-link').click(function(){
@@ -101,6 +108,8 @@ else
             }
             else if(a=='#user_settings')
             {
+            	$('#simpan').fadeIn();
+            	$('#mode').val('user_settings');
             	user_settings();
             }
          })
@@ -213,6 +222,185 @@ else
 				},
 				'tgl_berdiri_ps': {
                     required: 'Silahkan isi form',
+                },
+			}
+		});
+
+		$('.js-select2').on('change', e => {
+			jQuery(e.currentTarget).valid();
+		});
+
+		$(".js-flatpickr").on("change", function (e) {  
+			$(this).valid(); 
+		});
+
+	}
+
+	function user_settings()
+	{
+		One.helpers('validation');
+
+		$.validator.addMethod("noSpace", function(value, element) { 
+			return value.indexOf(" ") < 0 && value != ""; 
+		}, "Username tidak boleh diisi spasi");
+
+		$.validator.addMethod("validDate", function(value, element) {
+			return this.optional(element) || moment(value,"DD-MM-YYYY").isValid();
+		}, "Silahkan masukkan format tanggal, exp: DD-MM-YYYY");
+
+		$.validator.addMethod("phoneUS", function(phone_number, element) {
+			phone_number = phone_number.replace(/\s+/g, "");
+			return this.optional(element) || phone_number.length > 9 && 
+			phone_number.match(/\+?([ -]?\d+)+|\(\d+\)([ -]\d+)/);
+		}, "Silahkan tulis format telepon dengan benar");
+
+
+		$('.js-validation').validate({
+			ignore: [],
+			button: {
+				selector: "#simpan",
+				disabled: "disabled"
+			},
+			debug: false,
+			errorClass: 'invalid-feedback',
+			errorElement: 'div',
+			errorPlacement: (error, e) => {
+				jQuery(e).parents('.form-group > div').append(error);
+			},
+			highlight: e => {
+				jQuery(e).closest('.form-group').removeClass('is-invalid').addClass('is-invalid');
+			},
+			success: e => {
+				jQuery(e).closest('.form-group').removeClass('is-invalid');
+				jQuery(e).remove();
+			},
+			rules: {
+				'username': {
+                	required: true,
+                	noSpace: true,     
+                	remote: {
+                		url: "pengaturan/check-username",
+                		type: "post",
+                		data: {
+                			"_token": "{{ csrf_token() }}",
+                			username: function()
+                          {
+                              return $('#form :input[name="username"]').val();
+                          }
+                		},
+                		beforeSend: function () {
+                			$('.ajax-loader').fadeIn();
+                            $("#status").html("Silahkan tunggu sesaat...");
+                            $('#loader').css('width','100%');
+                		},
+                		dataFilter: function (data) {
+                			var json = JSON.parse(data);
+                			$('.ajax-loader').fadeOut();
+                			if (json.msg == "true") {
+                				bootstrap_toast('Username sudah digunakan user lain!','gagal');
+                				return "\"" + "Username sudah digunakan" + "\"";
+                			} else {
+                				bootstrap_toast('Username tersedia','sukses');
+                				return 'true';
+                			}
+                		}
+                	}
+                }, 
+				'email_username': {
+                	required: true,     
+                	email:true,
+                	remote: {
+                		url: "pengaturan/check-email",
+                		type: "post",
+                		data: {
+                			"_token": "{{ csrf_token() }}",
+                			email_username: function()
+                          {
+                              return $('#form :input[name="email_username"]').val();
+                          }
+                		},
+                		beforeSend: function () {
+                			$('.ajax-loader').fadeIn();
+                            $("#status").html("Silahkan tunggu sesaat...");
+                            $('#loader').css('width','100%');
+                		},
+                		dataFilter: function (data) {
+                			var json = JSON.parse(data);
+                			$('.ajax-loader').fadeOut();
+                			if (json.msg == "true") {
+                				bootstrap_toast('Email sudah digunakan user lain!','gagal');
+                				return "\"" + "Email sudah digunakan" + "\"";
+                			} else {
+                				bootstrap_toast('Email tersedia','sukses');
+                				return 'true';
+                			}
+                		}
+                	}
+                },
+                'old_password': {
+                	required:false,
+                    remote: {
+                		url: "pengaturan/check-password",
+                		type: "post",
+                		data: {
+                			"_token": "{{ csrf_token() }}",
+                			password: function()
+                          {
+                              return $('#form :input[name="old_password"]').val();
+                          }
+                		},
+                		beforeSend: function () {
+                			$('.ajax-loader').fadeIn();
+                            $("#status").html("Silahkan tunggu sesaat...");
+                            $('#loader').css('width','100%');
+                		},
+                		dataFilter: function (data) {
+                			var json = JSON.parse(data);
+                			$('.ajax-loader').fadeOut();
+                			if (json.msg == "true") {
+                				bootstrap_toast('Password lama yang anda isikan salah!','gagal');
+                				return "\"" + "Password lama yang anda isikan salah" + "\"";
+                			} else {
+                				bootstrap_toast('Password tersedia','sukses');
+                				return 'true';
+                			}
+                		}
+                	}
+                }, 
+                'new_password': {
+                	required:false,
+                    minlength: 8,
+                },
+                're_password' : {
+                required:false,
+				minlength : 5,
+				equalTo : "#new_password"
+			}
+			},
+			messages: {
+				'nama': {
+                    required: 'Silahkan isi form',
+                    minlength: 'Isian minimal 1 karakter',
+                    maxlength: 'Isian maksimal 100 karakter',
+                },
+                'username': {
+                    required: 'Silahkan isi form',
+                    remote: $.validator.format("{0} is already taken.")
+                },
+                'email_username': {
+                    required: 'Silahkan isi form',
+                    remote: $.validator.format("{0} is already taken."),
+                    email:"Silahkan masukkan format email, contoh john.doe@mail.com"
+                },
+                'old_password': {
+                    remote: 'Password lama yang anda isikan salah',
+                },
+                'new_password': {
+                    minlength: 'Isian minimal 8 karakter',
+                },
+                're_password': {
+                	minlength: 'Isian minimal 8 karakter',
+                    equalTo:'Password yang anda inputkan salah!'
                 },
 			}
 		});

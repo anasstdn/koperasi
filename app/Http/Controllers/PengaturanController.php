@@ -15,6 +15,7 @@ use Response;
 use DataTables;
 use Illuminate\Support\Facades\Validator;
 use App\Models\ConfigId;
+use Illuminate\Support\Facades\Hash;
 
 class PengaturanController extends Controller
 {
@@ -29,8 +30,10 @@ class PengaturanController extends Controller
 
 	public function index()
 	{
+		$perusahaan=Perusahaan::first();
+		$user=User::find(Auth::user()->id);
 		$this->menuAccess(\Auth::user(),'Pengaturan');
-		return view('pengaturan.index');
+		return view('pengaturan.index',compact('perusahaan','user'));
 	}
 
 	public function getData()
@@ -90,16 +93,41 @@ class PengaturanController extends Controller
 			DB::beginTransaction();
 			try {
 
+				if($all_data['flag_aktif']=='KSU')
+				{
+					$flag_ksu='Y';
+					$flag_ksp='N';
+				}
+				else
+				{
+					$flag_ksu='N';
+					$flag_ksp='Y';
+				}
+
 				$data=array(
-					'nama_ps'  	=>  $all_data['nama_ps'],
-					'alamat_ps' 	=>  $all_data['alamat_ps'],
-					'email_ps'	=>  $all_data['email_ps'],
-					'alamat_ps'	=>  $all_data['description'],
+					'nama_ps'  			=>  $all_data['nama_ps'],
+					'alamat_ps'			=>  $all_data['alamat_ps'],
+					'email_ps'			=>  $all_data['email_ps'],
+					'telp_ps'			=>  $all_data['telp_ps'],
+					'fax_ps'			=>  $all_data['fax_ps'],
+					'website_ps'		=>  $all_data['website_ps'],
+					'tgl_berdiri_ps'	=>  date('Y-m-d',strtotime($all_data['tgl_berdiri_ps'])),
+					'flag_ksu'			=>  $flag_ksu,
+					'flag_ksp'			=>  $flag_ksp,
 				);
 
-				$this->logCreatedActivity(Auth::user(),$data,'Config ID','config_ids');
-				$act=ConfigId::create($data);
+				$get=Perusahaan::orderby('id','asc')->first();
 
+				if(isset($get) && !empty($get))
+				{
+					$this->logUpdatedActivity(Auth::user(),$get->getAttributes(),$data,'Perusahaan','perusahaan');
+					$act=$get->update($data);
+				}
+				else
+				{
+					$this->logCreatedActivity(Auth::user(),$data,'Perusahaan','perusahaan');
+					$act=Perusahaan::create($data);
+				}
 				message($act,'Data berhasil disimpan!','Data gagal disimpan!');
 
 			}catch (Exception $e) {
@@ -110,7 +138,44 @@ class PengaturanController extends Controller
 		}
 		elseif($all_data['mode']=='user_settings')
 		{
+			DB::beginTransaction();
+			try {
+				$user=Auth::user();
 
+				if($user->username!=$all_data['username'])
+				{
+					$data_username=array(
+						'username'=>$all_data['username'],
+					);
+					$this->logUpdatedActivity(Auth::user(),User::find(Auth::User()->id)->getAttributes(),$data_username,'Pengaturan (Username Update)','users');
+					$user1=User::find(Auth::User()->id)->update($data_username);
+				}
+
+				if(isset($all_data['old_password']) && isset($all_data['new_password']))
+				{
+					if (Hash::check($all_data['old_password'], $user->password)) {
+						$data_pass=array(
+							'password'=>bcrypt($all_data['new_password']),
+						);
+						$this->logUpdatedActivity(Auth::user(),User::find(Auth::User()->id)->getAttributes(),$data_pass,'Profile Edit (Password Update)','users');
+						$pass=User::find(Auth::User()->id)->update($data_pass);
+					}
+
+				}
+
+				$data=array(
+					'email'=>$all_data['email_username'],
+				);
+				$this->logUpdatedActivity(Auth::user(),User::find(Auth::User()->id)->getAttributes(),$data,'Pengaturan (Update)','users');
+				$act=$user->update($data);
+
+				message($act,'Data berhasil disimpan!','Data gagal disimpan!');
+
+			}catch (Exception $e) {
+				echo 'Message' .$e->getMessage();
+				DB::rollback();
+			}
+			DB::commit();
 		}
 
 		return redirect('/pengaturan');
@@ -245,6 +310,39 @@ class PengaturanController extends Controller
 			$act=$user->delete();
 			message($act,'Data berhasil dihapus!','Data gagal dihapus!');
 		}
+	}
+
+	public function checkUsername(Request $request)
+	{
+		$all_data = $request->all();
+		$cek=User::where('username',$all_data['username'])->where('id','<>',Auth::user()->id)->exists();
+		if($cek==true) {
+			return Response::json(array('msg' => 'true'));
+		}
+		return Response::json(array('msg' => 'false'));  
+	}
+
+	public function checkEmail(Request $request)
+	{
+		$all_data = $request->all();
+		$cek=User::where('email',$all_data['email_username'])->where('id','<>',Auth::user()->id)->exists();
+		if($cek==true) {
+			return Response::json(array('msg' => 'true'));
+		}
+		return Response::json(array('msg' => 'false'));  
+	}
+
+	public function checkPassword(Request $request)
+	{
+		$all_data = $request->all();
+		$user=User::find(Auth::user()->id);
+		if (Hash::check($all_data['password'], $user->password)) {
+			return Response::json(array('msg' => 'false'));  
+		}
+		else
+		{
+			return Response::json(array('msg' => 'true'));
+		}  
 	}
 
 }

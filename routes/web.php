@@ -198,5 +198,8 @@ Route::prefix('pengaturan')->group(function() {
     Route::match(['get', 'post'],'/{id}/edit','PengaturanController@editConfig');
     Route::match(['get','post'],'/update/{id}','PengaturanController@update');
     Route::match(['get','post'],'/update-config/{id}','PengaturanController@updateConfig');
+    Route::match(['get', 'post'],'/check-username','PengaturanController@checkUsername');
+    Route::match(['get', 'post'],'/check-email','PengaturanController@checkEmail');
+    Route::match(['get', 'post'],'/check-password','PengaturanController@checkPassword');
     Route::get('/{id}/delete', 'PengaturanController@destroy');
 });

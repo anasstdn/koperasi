@@ -50,19 +50,32 @@
 <div class="form-group row">
       <div class="col-12">
         <label for="profile-settings-username">Tanggal Berdiri Koperasi&nbsp<span style="color: red">*</span></label>
-        <input type="text" class="form-control form-control-lg js-flatpickr bg-white" data-date-format="d-m-Y" id="tgl_berdiri_ps" name="tgl_berdiri_ps" placeholder="Tanggal Berdiri Koperasi" value="{{isset($perusahaan)?isset($perusahaan->tgl_berdiri_ps)?$perusahaan->tgl_berdiri_ps:'':''}}">
+        <input type="text" class="form-control form-control-lg js-flatpickr bg-white" data-date-format="d-m-Y" id="tgl_berdiri_ps" name="tgl_berdiri_ps" placeholder="Tanggal Berdiri Koperasi" value="{{isset($perusahaan)?isset($perusahaan->tgl_berdiri_ps)?date('d-m-Y',strtotime($perusahaan->tgl_berdiri_ps)):'':''}}">
     </div>
 </div>
-
+@php
+$flag_mode=null;
+if(isset($perusahaan->flag_ksp) && isset($perusahaan->flag_ksu))
+{
+  if($perusahaan->flag_ksu=='Y' && $perusahaan->flag_ksp=='N')
+  {
+    $flag_mode='ksu';
+  }
+  else
+  {
+    $flag_mode='ksp';
+  }
+}
+@endphp
 <div class="form-group row">
   <div class="col-12">
     <label for="profile-settings-username">Mode Operasi&nbsp<span style="color: red">*</span></label>&nbsp
     <div class="custom-control custom-radio custom-control-inline">
-        <input type="radio" class="custom-control-input" id="flag_aktif_Y" name="flag_aktif" value="KSU" {{isset($profile)?isset($profile->flag_keaktifan) && $profile->flag_keaktifan=='Y'?'checked':'':'checked'}}>
+        <input type="radio" class="custom-control-input" id="flag_aktif_Y" name="flag_aktif" value="KSU" {{isset($flag_mode)?$flag_mode=='ksu'?'checked':'':'checked'}}>
         <label class="custom-control-label" for="flag_aktif_Y">KSU</label>
     </div>
     <div class="custom-control custom-radio custom-control-inline">
-        <input type="radio" class="custom-control-input" id="flag_aktif_N" name="flag_aktif" value="KSP" {{isset($profile)?isset($profile->flag_keaktifan) && $profile->flag_keaktifan=='N'?'checked':'':''}}>
+        <input type="radio" class="custom-control-input" id="flag_aktif_N" name="flag_aktif" value="KSP" {{isset($flag_mode)?$flag_mode=='ksp'?'checked':'':''}}>
         <label class="custom-control-label" for="flag_aktif_N">KSP</label>
     </div>
 </div>
