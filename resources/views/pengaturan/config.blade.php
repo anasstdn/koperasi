@@ -1,4 +1,9 @@
 <h4 class="font-w400">ID Konfigurasi</h4>
+<div class="form-group row">
+	<div class="col-md-1">
+		<a class="btn btn-primary btn-sm" id="tambah" href="#" onclick="show_modal('{{url('pengaturan/create-config')}}')" >Tambah</a>
+	</div>
+</div>
 <div class="table-responsive">
 	<table class="table table-bordered table-striped table-vcenter" id="tabel">
 		<thead>
@@ -17,8 +22,7 @@
 		</tbody>
 	</table>
 </div>
- <div class="modal fade" id="formModal" tabindex="-1" role="dialog" aria-labelledby="modal-block-popin" aria-hidden="true">
-  </div>
+
 
 @push('js')
 <script type="text/javascript">

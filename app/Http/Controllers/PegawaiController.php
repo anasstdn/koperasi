@@ -8,6 +8,7 @@ use App\Traits\ActivityTraits;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Profile;
 use App\Models\Pegawai;
+use App\Models\Anggotum;
 use App\Models\User;
 use App\Models\RoleUser;
 use Illuminate\Support\Facades\DB;

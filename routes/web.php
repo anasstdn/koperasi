@@ -191,9 +191,12 @@ Route::prefix('anggota')->group(function() {
 Route::prefix('pengaturan')->group(function() {
     Route::get('/', 'PengaturanController@index');
     Route::get('/create', 'PengaturanController@create');
+    Route::get('/create-config', 'PengaturanController@createConfig');
     Route::match(['get', 'post'],'/get-data','PengaturanController@getData');
+    Route::match(['get', 'post'],'/simpan-config',['as'=>'pengaturan.simpan-config','uses'=>'PengaturanController@simpanConfig']);
     Route::match(['get','post'],'/store','PengaturanController@store');
-    Route::match(['get', 'post'],'/{id}/edit','PengaturanController@edit');
+    Route::match(['get', 'post'],'/{id}/edit','PengaturanController@editConfig');
     Route::match(['get','post'],'/update/{id}','PengaturanController@update');
+    Route::match(['get','post'],'/update-config/{id}','PengaturanController@updateConfig');
     Route::get('/{id}/delete', 'PengaturanController@destroy');
 });

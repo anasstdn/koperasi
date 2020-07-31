@@ -20,10 +20,16 @@
 	<div class="block">
 		<div class="block-header">
 			<div class="col-md-1">
-				<a class="btn btn-primary btn-sm" id="tambah" href="#" >Tambah</a>
+				
 			</div>
 		</div>
 		<div class="block-content block-content-full">
+
+            <div class="form-group row">
+                <div class="col-md-1">
+                    <a class="btn btn-primary btn-sm" id="tambah" href="#" >Tambah</a>
+                </div>
+            </div>
 			<!-- DataTables init on table by adding .js-dataTable-full-pagination class, functionality is initialized in js/pages/be_tables_datatables.min.js which was auto compiled from _es6/pages/be_tables_datatables.js -->
 			<div class="row">
 				<div class="col-lg-12" id="table_width">

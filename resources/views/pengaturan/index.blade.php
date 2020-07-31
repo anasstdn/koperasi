@@ -33,8 +33,7 @@
 							@include('pengaturan.config')
 						</div>
 						<div class="tab-pane fade fade-left" id="perusahaan" role="tabpanel">
-							<h4 class="font-w400">Profile Content</h4>
-							<p>Content slides in to the left..</p>
+							@include('pengaturan.perusahaan')
 						</div>
 						@endif
 						<div class="form-group row">
@@ -63,7 +62,8 @@ else
 	$start='#user_settings';
 }
 @endphp
-
+ <div class="modal fade" id="formModal" tabindex="-1" role="dialog" aria-labelledby="modal-block-popin" aria-hidden="true">
+  </div>
 @endsection
 
 @push('js')
@@ -77,6 +77,7 @@ else
 		{
 			$('#mode').val('perusahaan');
 			$('#simpan').fadeIn();
+			perusahaan();
 		}
 
 		if(nama=='#user_settings')
@@ -95,18 +96,136 @@ else
             else if(a=='#perusahaan')
             {
             	$('#simpan').fadeIn();
+            	$('#mode').val('perusahaan');
+            	perusahaan();
             }
-
-            else if(a=='#prefix')
-            {
-            	prefix();
-            }
-
             else if(a=='#user_settings')
             {
             	user_settings();
             }
          })
 	});
+
+	function perusahaan()
+	{
+		One.helpers('validation');
+
+		$.validator.addMethod("noSpace", function(value, element) { 
+			return value.indexOf(" ") < 0 && value != ""; 
+		}, "Username tidak boleh diisi spasi");
+
+		$.validator.addMethod("validDate", function(value, element) {
+			return this.optional(element) || moment(value,"DD-MM-YYYY").isValid();
+		}, "Silahkan masukkan format tanggal, exp: DD-MM-YYYY");
+
+		$.validator.addMethod("phoneUS", function(phone_number, element) {
+			phone_number = phone_number.replace(/\s+/g, "");
+			return this.optional(element) || phone_number.length > 9 && 
+			phone_number.match(/\+?([ -]?\d+)+|\(\d+\)([ -]\d+)/);
+		}, "Silahkan tulis format telepon dengan benar");
+
+
+		$('.js-validation').validate({
+			ignore: [],
+			button: {
+				selector: "#simpan",
+				disabled: "disabled"
+			},
+			debug: false,
+			errorClass: 'invalid-feedback',
+			errorElement: 'div',
+			errorPlacement: (error, e) => {
+				jQuery(e).parents('.form-group > div').append(error);
+			},
+			highlight: e => {
+				jQuery(e).closest('.form-group').removeClass('is-invalid').addClass('is-invalid');
+			},
+			success: e => {
+				jQuery(e).closest('.form-group').removeClass('is-invalid');
+				jQuery(e).remove();
+			},
+			rules: {
+				'nama_ps': {
+					required: true,
+					minlength: 1,
+					maxlength: 100
+				},
+				'alamat_ps': {
+					required: true,
+					minlength: 1
+				},
+				'email_ps': {
+					required: true,
+					minlength: 1,
+					email:true,
+				},
+				'telp_ps': {
+					required: true,
+					minlength: 8,
+					maxlength:14,
+					phoneUS:true,
+				},
+				'fax_ps': {
+					required: false,
+					minlength: 8,
+					maxlength:14,
+					phoneUS:true,
+				},
+				'website_ps': {
+					required: false,
+					minlength: 1,
+					url:true,
+				},
+				 'tgl_berdiri_ps': {
+                    required: true,
+                    validDate:true,
+                },
+			},
+			messages: {
+				'nama_ps': {
+					required: 'Silahkan isi form',
+					minlength: 'Karakter minimal diisi 1',
+					maxlength: 'Karakter maksimal diisi 100'
+				},
+				'alamat_ps': {
+					required: 'Silahkan isi form',
+					minlength: 'Karakter minimal diisi 1'
+				},
+				'email_ps': {
+                    required: 'Silahkan isi form',
+                    remote: $.validator.format("{0} is already taken."),
+                    email:"Format yang diisi harus email",
+                },
+                'telp_ps': {
+					required: 'Silahkan isi form',
+					minlength: 'Karakter minimal diisi 8',
+					maxlength: 'Karakter maksimal diisi 14'
+				},
+				'fax_ps': {
+					required: 'Silahkan isi form',
+					minlength: 'Karakter minimal diisi 8',
+					maxlength: 'Karakter maksimal diisi 14'
+				},
+				'website_ps': {
+					required: 'Silahkan isi form',
+					minlength: 'Karakter minimal diisi 1',
+					url:'Masukkan format url dengan benar'
+				},
+				'tgl_berdiri_ps': {
+                    required: 'Silahkan isi form',
+                },
+			}
+		});
+
+		$('.js-select2').on('change', e => {
+			jQuery(e.currentTarget).valid();
+		});
+
+		$(".js-flatpickr").on("change", function (e) {  
+			$(this).valid(); 
+		});
+
+	}
+
 </script>
 @endpush
